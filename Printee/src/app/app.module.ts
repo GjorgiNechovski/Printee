@@ -10,9 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     NgbModule,
@@ -22,6 +20,6 @@ import { EffectsModule } from '@ngrx/effects';
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

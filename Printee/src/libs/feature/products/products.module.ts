@@ -8,16 +8,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './state/product-state.effects';
 
 @NgModule({
-  declarations: [
-    ProductComponent
-  ],
+  declarations: [ProductComponent],
   imports: [
     CommonModule,
     StoreModule.forFeature(PRODUCT__STORE_KEY, ProductReducer),
-    EffectsModule.forFeature([ProductEffects])
+    EffectsModule.forFeature([ProductEffects]),
   ],
-  exports: [
-    ProductComponent
-  ]
+  exports: [ProductComponent],
 })
-export class ProductsModule { }
+export class ProductsModule {}
