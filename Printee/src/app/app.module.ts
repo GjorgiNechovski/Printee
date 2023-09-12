@@ -5,6 +5,9 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { NavigationModule } from 'src/libs/feature/navigation/navigation.module';
+import { ProductsModule } from 'src/libs/feature/products/products.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { NavigationModule } from 'src/libs/feature/navigation/navigation.module'
     BrowserModule,
     NgbModule,
     HttpClientModule,
-    NavigationModule
+    NavigationModule,
+    ProductsModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
   ],
   bootstrap: [AppComponent]
 })

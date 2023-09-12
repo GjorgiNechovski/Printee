@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../services/product.service';
+import { ProductFacade } from '../state/product.state.facade';
 
 @Component({
   selector: 'app-product',
@@ -7,9 +7,10 @@ import { ProductService } from '../services/product.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  constructor(private service: ProductService){}
+  constructor(private productFacade: ProductFacade){}
 
   ngOnInit(): void {
-    this.service.getProducts();
+    this.productFacade.fetchProducts()
+     this.productFacade.getProducts().subscribe(x=>console.log(x))
   }
 }
