@@ -1,0 +1,16 @@
+<app-page-label [text]="'Product list'"></app-page-label>
+
+<div class="container">
+  <div class="row">
+    <div *ngFor="let product of products" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-5">
+      <div class="bg-warning p-3 text-center">
+        <a (onclick)="putToState(product)" [routerLink]="['/product', product.uid]">
+        <h1>{{product.name}}</h1>
+        <img [src]="product.imageUrl" class="img-fluid" alt="Image of {{product.name}}">
+      </a>
+        <span>{{product.unitPrice}}</span>
+        <button class="btn btn-outline-primary btn-sm float-end" type="button">Add To Cart</button>
+      </div>
+    </div>
+  </div>
+</div>

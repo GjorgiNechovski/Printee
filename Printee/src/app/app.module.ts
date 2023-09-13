@@ -8,6 +8,7 @@ import { NavigationModule } from 'src/libs/feature/navigation/navigation.module'
 import { ProductsModule } from 'src/libs/feature/products/products.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { EffectsModule } from '@ngrx/effects';
     ProductsModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+    RouterModule.forRoot([]),
   ],
   bootstrap: [AppComponent],
 })

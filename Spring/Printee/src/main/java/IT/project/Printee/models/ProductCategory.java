@@ -22,6 +22,9 @@ public class ProductCategory {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Product> products;
 
+    @Column(name = "uid", nullable = false, unique = true, length = 36) // Added uid column
+    private String uid;
+
 }
 
 

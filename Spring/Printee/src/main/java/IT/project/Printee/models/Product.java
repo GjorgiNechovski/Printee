@@ -49,4 +49,7 @@ public class Product {
     @Column(name = "last_updated")
     @UpdateTimestamp
     private Date lastUpdated;
+
+    @Column(name = "uid", nullable = false, unique = true, length = 36) // Added uid column
+    private String uid;
 }

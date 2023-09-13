@@ -7,3 +7,8 @@ export const productState = createSelector(
   state,
   (state1: IProductState) => state1.products
 );
+
+export const selectedProduct = createSelector(
+  state,
+  (state1: IProductState) => state1.selectedProduct
+);

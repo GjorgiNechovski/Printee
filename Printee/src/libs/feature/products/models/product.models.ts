@@ -11,6 +11,7 @@ export class Product {
     public active: boolean,
     public unitsInStock: number,
     public dateCreated: Date,
-    public lastUpdated: Date
+    public lastUpdated: Date,
+    public uid: string
   ) {}
 }

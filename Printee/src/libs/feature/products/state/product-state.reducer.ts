@@ -9,5 +9,11 @@ export const ProductReducer = createReducer(
       ...state,
       products: products,
     };
+  }),
+  on(ProductActions.putProductInState, (state, { product }) => {
+    return {
+      ...state,
+      selectedProduct: product,
+    };
   })
 );
