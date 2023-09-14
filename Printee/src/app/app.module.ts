@@ -9,6 +9,7 @@ import { ProductsModule } from 'src/libs/feature/products/products.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterModule } from '@angular/router';
+import { CartModule } from 'src/libs/feature/cart/cart.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     NavigationModule,
     ProductsModule,
+    CartModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     RouterModule.forRoot([]),

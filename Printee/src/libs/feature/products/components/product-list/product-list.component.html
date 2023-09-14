@@ -9,7 +9,7 @@
           <img [src]="product.imageUrl" class="img-fluid" alt="Image of {{ product.name }}">
         </div> 
         <span>{{product.unitPrice}}</span>
-        <button class="btn btn-outline-primary btn-sm float-end" type="button">Add To Cart</button>
+        <button (click)="addToCart(product)" class="btn btn-outline-primary btn-sm float-end" type="button">Add To Cart</button>
       </div>
     </div>
   </div>
