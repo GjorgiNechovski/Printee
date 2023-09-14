@@ -17,7 +17,7 @@ export const routes: Routes = [
   {
     path: 'product/:uid',
     component: NavigationComponent,
-    children: [{ path: 'products', component: ProductComponent }],
+    children: [{ path: '', component: ProductComponent }],
   },
   {
     path: '**',

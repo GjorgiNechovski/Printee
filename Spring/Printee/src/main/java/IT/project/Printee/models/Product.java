@@ -50,6 +50,6 @@ public class Product {
     @UpdateTimestamp
     private Date lastUpdated;
 
-    @Column(name = "uid", nullable = false, unique = true, length = 36) // Added uid column
+    @Column(name = "uid")
     private String uid;
 }

@@ -26,9 +26,7 @@ export class ProductFacade {
       .pipe(filter((x) => x.length > 0));
   }
 
-  public getSelectedProduct(): Observable<Product> {
-    return this.store
-      .select(ProductSelectors.selectedProduct)
-      .pipe(filter((x): x is Product => !!x));
+  public getSelectedProduct(): Observable<Product | null> {
+    return this.store.select(ProductSelectors.selectedProduct);
   }
 }
