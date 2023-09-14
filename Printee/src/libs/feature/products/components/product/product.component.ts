@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.models';
 import { ProductFacade } from '../../state/product.state.facade';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { CartService } from 'src/libs/feature/cart/services/cart.service';
 
 @Component({
   selector: 'app-product',
@@ -10,9 +12,15 @@ import { Router } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
   product!: Product;
+
+  productForm: FormGroup = new FormGroup({
+    numberOfProducts: new FormControl(1),
+  });
+
   constructor(
     private productFacade: ProductFacade,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -34,5 +42,14 @@ export class ProductComponent implements OnInit {
         }
       });
     }
+  }
+
+  addToCart(): void {
+    console.log('called');
+
+    this.cartService.addMultipleToCart(
+      this.product,
+      this.productForm.controls['numberOfProducts'].value
+    );
   }
 }

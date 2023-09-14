@@ -21,6 +21,17 @@ export class CartService {
     this.calculatePrice();
   }
 
+  public addMultipleToCart(product: Product, amount: number): void {
+    const updatedProducts = [...this.productsSubject.value];
+
+    for (let i = 0; i < amount; i++) {
+      updatedProducts.push(product);
+    }
+
+    this.productsSubject.next(updatedProducts);
+    this.calculatePrice();
+  }
+
   private calculatePrice(): void {
     let totalPrice = 0;
     this.productsSubject.value.forEach((x) => {

@@ -9,6 +9,7 @@ import { ProductEffects } from './state/product-state.effects';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { PageLabelModule } from 'src/ui/page-label/page-label.module';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ProductComponent, ProductListComponent],
@@ -18,6 +19,7 @@ import { RouterModule } from '@angular/router';
     EffectsModule.forFeature([ProductEffects]),
     PageLabelModule,
     RouterModule,
+    ReactiveFormsModule,
   ],
   exports: [ProductComponent, RouterModule, ProductListComponent],
 })
