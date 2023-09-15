@@ -1,4 +1,5 @@
 import { ProductCategory } from './product-category.models';
+import { User } from './user.models';
 
 export class Product {
   constructor(
@@ -12,6 +13,7 @@ export class Product {
     public unitsInStock: number,
     public dateCreated: Date,
     public lastUpdated: Date,
-    public uid: string
+    public uid: string,
+    public user: User
   ) {}
 }
