@@ -11,7 +11,7 @@ import java.util.Date;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name="product")
+@Table(name = "product")
 @Data
 public class Product {
 
@@ -20,13 +20,13 @@ public class Product {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(name = "fk_category"))
     private ProductCategory category;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "print_studio_id", nullable = false, foreignKey = @ForeignKey(name = "fk_print_studio"))
+    private PrintStudio printStudio;
 
     @Column(name = "name")
     private String name;
@@ -57,3 +57,4 @@ public class Product {
     @Column(name = "uid")
     private String uid;
 }
+

@@ -6,9 +6,9 @@ import lombok.Data;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "print_studio")
 @Data
-public class User {
+public class PrintStudio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +17,6 @@ public class User {
 
     @Column(name = "name")
     private String name;
-
-    @Column(name = "last_name")
-    private String lastName;
 
     @Column(name = "email")
     private String email;
@@ -30,10 +27,7 @@ public class User {
     @Column(name = "uid", unique = true)
     private String uid;
 
-    @Column(name = "role")
-    private String role;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "printStudio")
     private Set<Product> products;
 
 }
