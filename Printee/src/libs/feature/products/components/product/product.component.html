@@ -1,34 +1,33 @@
 <app-page-label *ngIf="product" [text]="product.name">
-    <div #component>
-    </div>
+  <div #component></div>
 </app-page-label>
 
 <div *ngIf="product" class="bg-body-secondary mx-5 p-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <img [src]="product.imageUrl" alt="Photo of {{product.name}}" class="img-fluid" />
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img [src]="product.imageUrl" alt="Photo of {{ product.name }}" class="img-fluid" />
+      </div>
+      <div class="col-md-6">
+        <h2 class="pt-2 pb-2">{{ product.name }}</h2>
+        <p class="pb-2" style="max-width: 400px; word-wrap: break-word">{{ product.description }}</p>
+        <p class="pb-2">Unit Price: {{ product.unitPrice }} MKD</p>
+        <p class="pb-2">Units in Stock: {{ product.unitsInStock }}</p>
+        <p>Date Created: {{ product.dateCreated }}</p>
+
+        <div class="d-flex align-items-center">
+          <button (click)="addToCart()" type="button" class="btn btn-outline-primary me-2">Add To Cart</button>
+          <form [formGroup]="productForm" class="ps-2 d-inline">
+            <div class="col-5">
+              <input
+                type="number"
+                formControlName="numberOfProducts"
+                class="form-control form-control-sm rounded-pill"
+                [value]="productForm.get('numberOfProducts')?.value ?? 1" />
             </div>
-            <div class="col-md-6">
-                <h2 class="pt-2 pb-2">{{ product.name }}</h2>
-                <p class="pb-2" style="max-width: 400px; word-wrap: break-word;">{{ product.description }}</p>
-                <p class="pb-2">Unit Price: {{ product.unitPrice }} MKD</p>
-                <p class="pb-2">Units in Stock: {{ product.unitsInStock }}</p>
-                <p>Date Created: {{ product.dateCreated }}</p>
-    
-                <div class="d-flex align-items-center">
-                    <button (click)="addToCart()" type="button" class="btn btn-outline-primary me-2">Add To Cart</button>
-                    <form [formGroup]="productForm" class="ps-2 d-inline">
-                        <div class="col-5">
-                            <input type="number" formControlName="numberOfProducts" class="form-control form-control-sm rounded-pill" [value]="productForm.get('numberOfProducts')?.value ?? 1">
-                        </div>
-                    </form>
-                </div>
-            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-
-
-  
-  

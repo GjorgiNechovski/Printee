@@ -38,9 +38,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       .getProducts()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((products) => {
-        const foundProduct = products.content.find(
-          (product: Product) => product.uid === uid
-        );
+        const foundProduct = products.content.find((product: Product) => product.uid === uid);
 
         if (foundProduct) {
           this.product = foundProduct;
@@ -51,10 +49,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   addToCart(): void {
-    this.cartService.addMultipleToCart(
-      this.product,
-      this.productForm.controls['numberOfProducts'].value
-    );
+    this.cartService.addMultipleToCart(this.product, this.productForm.controls['numberOfProducts'].value);
   }
 
   ngOnDestroy(): void {

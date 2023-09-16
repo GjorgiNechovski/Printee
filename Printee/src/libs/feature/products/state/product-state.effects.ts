@@ -15,13 +15,7 @@ export class ProductEffects {
     return this.actions$.pipe(
       ofType(ProductActions.fetchProducts),
       switchMap((action) =>
-        this.service
-          .getProducts(action.productFilter)
-          .pipe(
-            map((response) =>
-              ProductActions.fetchProductsSuccess({ products: response })
-            )
-          )
+        this.service.getProducts(action.productFilter).pipe(map((response) => ProductActions.fetchProductsSuccess({ products: response })))
       )
     );
   });
@@ -30,13 +24,7 @@ export class ProductEffects {
     return this.actions$.pipe(
       ofType(ProductActions.fetchProduct),
       switchMap((action) =>
-        this.service
-          .getProductByUid(action.productUid)
-          .pipe(
-            map((response) =>
-              ProductActions.fetchProductSuccess({ product: response })
-            )
-          )
+        this.service.getProductByUid(action.productUid).pipe(map((response) => ProductActions.fetchProductSuccess({ product: response })))
       )
     );
   });
@@ -44,15 +32,7 @@ export class ProductEffects {
   fetchCategories$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductActions.fetchCategories),
-      switchMap(() =>
-        this.service
-          .getCategories()
-          .pipe(
-            map((response) =>
-              ProductActions.fetchCategoriesSuccess({ categories: response })
-            )
-          )
-      )
+      switchMap(() => this.service.getCategories().pipe(map((response) => ProductActions.fetchCategoriesSuccess({ categories: response }))))
     );
   });
 }

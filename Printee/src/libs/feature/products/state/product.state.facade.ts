@@ -14,9 +14,7 @@ export class ProductFacade {
   public constructor(private readonly store: Store<IProductState>) {}
 
   public fetchProducts(productFilter: string | null = null): void {
-    this.store.dispatch(
-      ProductActions.fetchProducts({ productFilter: productFilter })
-    );
+    this.store.dispatch(ProductActions.fetchProducts({ productFilter: productFilter }));
   }
 
   public fetchProductByUid(uid: string): void {
@@ -28,15 +26,11 @@ export class ProductFacade {
   }
 
   public getCategories(): Observable<ProductCategory[]> {
-    return this.store
-      .select(ProductSelectors.categories)
-      .pipe(filter((x): x is ProductCategory[] => !!x));
+    return this.store.select(ProductSelectors.categories).pipe(filter((x): x is ProductCategory[] => !!x));
   }
 
   public getProducts(): Observable<PaginatedProducts> {
-    return this.store
-      .select(ProductSelectors.productState)
-      .pipe(filter((x): x is PaginatedProducts => !!x));
+    return this.store.select(ProductSelectors.productState).pipe(filter((x): x is PaginatedProducts => !!x));
   }
 
   public getSelectedProduct(): Observable<Product | null> {

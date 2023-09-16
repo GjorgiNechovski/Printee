@@ -13,9 +13,7 @@ export class ProductService {
 
   getProducts(productFilter: string | null): Observable<PaginatedProducts> {
     if (productFilter) {
-      return this.httpClient.get<PaginatedProducts>(
-        apiUrl + '/products?' + productFilter
-      );
+      return this.httpClient.get<PaginatedProducts>(apiUrl + '/products?' + productFilter);
     } else {
       return this.httpClient.get<PaginatedProducts>(apiUrl + '/products');
     }
@@ -26,8 +24,6 @@ export class ProductService {
   }
 
   getCategories(): Observable<ProductCategory[]> {
-    return this.httpClient.get<ProductCategory[]>(
-      apiUrl + '/productCategories'
-    );
+    return this.httpClient.get<ProductCategory[]>(apiUrl + '/productCategories');
   }
 }

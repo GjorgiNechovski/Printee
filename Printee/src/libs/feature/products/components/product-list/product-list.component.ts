@@ -3,13 +3,7 @@ import { Product } from '../../../../../models/product.models';
 import { ProductFacade } from '../../state/product.state.facade';
 import { Router } from '@angular/router';
 import { CartService } from 'src/libs/feature/cart/services/cart.service';
-import {
-  Subject,
-  combineLatest,
-  debounceTime,
-  distinctUntilChanged,
-  takeUntil,
-} from 'rxjs';
+import { Subject, combineLatest, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ProductCategory } from 'src/models/product-category.models';
 
@@ -41,32 +35,23 @@ export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
 
   ngOnInit(): void {
-    this.searchForm.valueChanges
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe((formValue) => {
-        const queryParams: string[] = [];
+    this.searchForm.valueChanges.pipe(debounceTime(400), distinctUntilChanged(), takeUntil(this.ngUnsubscribe)).subscribe((formValue) => {
+      const queryParams: string[] = [];
 
-        if (formValue.categories) {
-          queryParams.push(`categoryUid=${formValue.categories}`);
-        }
+      if (formValue.categories) {
+        queryParams.push(`categoryUid=${formValue.categories}`);
+      }
 
-        if (formValue.search) {
-          queryParams.push(`printStudioUid=${formValue.numberOfProducts}`);
-        }
+      if (formValue.search) {
+        queryParams.push(`printStudioUid=${formValue.numberOfProducts}`);
+      }
 
-        const queryString = queryParams.join('&');
+      const queryString = queryParams.join('&');
 
-        this.productFacade.fetchProducts(queryString);
-      });
+      this.productFacade.fetchProducts(queryString);
+    });
 
-    combineLatest([
-      this.productFacade.getProducts(),
-      this.productFacade.getCategories(),
-    ])
+    combineLatest([this.productFacade.getProducts(), this.productFacade.getCategories()])
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(([productsResponse, categories]) => {
         this.products = productsResponse.content;

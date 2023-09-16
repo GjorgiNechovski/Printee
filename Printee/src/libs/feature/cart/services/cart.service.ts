@@ -6,14 +6,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CartService {
-  private priceSubject: BehaviorSubject<number> = new BehaviorSubject<number>(
-    0
-  );
+  private priceSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   public price: Observable<number> = this.priceSubject.asObservable();
 
-  private productsSubject: BehaviorSubject<Product[]> = new BehaviorSubject<
-    Product[]
-  >([]);
+  private productsSubject: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   public products$: Observable<Product[]> = this.productsSubject.asObservable();
 
   public addToCart(product: Product): void {
