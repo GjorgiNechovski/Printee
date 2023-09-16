@@ -6,6 +6,8 @@ import { CartService } from 'src/libs/feature/cart/services/cart.service';
 import { Subject, combineLatest, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ProductCategory } from 'src/models/product-category.models';
+import { PrintStudioFacade } from 'src/libs/feature/print-studio/state/product.state.facade';
+import { PrintStudio } from 'src/models/print-studio.models';
 
 @Component({
   selector: 'app-product-list',
@@ -25,14 +27,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
   });
 
   categoriesList = new Array<ProductCategory>();
+  printStudiosList = new Array<PrintStudio>();
+
+  products: Product[] = [];
 
   constructor(
     private productFacade: ProductFacade,
     private router: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private printStudiosFacade: PrintStudioFacade
   ) {}
-
-  products: Product[] = [];
 
   ngOnInit(): void {
     this.searchForm.valueChanges.pipe(debounceTime(400), distinctUntilChanged(), takeUntil(this.ngUnsubscribe)).subscribe((formValue) => {
@@ -42,8 +46,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
         queryParams.push(`categoryUid=${formValue.categories}`);
       }
 
-      if (formValue.search) {
-        queryParams.push(`printStudioUid=${formValue.numberOfProducts}`);
+      if (formValue.printStudios) {
+        queryParams.push(`printStudioUid=${formValue.printStudios}`);
       }
 
       const queryString = queryParams.join('&');
@@ -51,12 +55,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.productFacade.fetchProducts(queryString);
     });
 
-    combineLatest([this.productFacade.getProducts(), this.productFacade.getCategories()])
+    combineLatest([this.productFacade.getProducts(), this.productFacade.getCategories(), this.printStudiosFacade.getPrintStudios()])
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(([productsResponse, categories]) => {
+      .subscribe(([productsResponse, categories, printStudios]) => {
         this.products = productsResponse.content;
         this.dataLength = productsResponse.totalElements;
         this.categoriesList = categories;
+        this.printStudiosList = printStudios;
+
+        console.log(printStudios);
       });
   }
 

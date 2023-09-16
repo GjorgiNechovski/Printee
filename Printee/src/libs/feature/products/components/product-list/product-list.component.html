@@ -2,14 +2,20 @@
 
 <form [formGroup]="searchForm" class="mb-4" style="margin-top: -2em">
   <div class="form-group row">
-    <div class="col-md-8">
+    <div class="col-md-6">
       <label for="search">Search by name:</label>
       <input id="search" type="text" class="form-control" formControlName="search" />
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <label for="categoriesSelect">Select Category:</label>
       <select id="categoriesSelect" class="form-control" formControlName="categories">
         <option *ngFor="let category of categoriesList" [value]="category.uid">{{ category.categoryName }}</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="studioSelect">Select Print Studios:</label>
+      <select id="studioSelect" class="form-control" formControlName="printStudios">
+        <option *ngFor="let studio of printStudiosList" [value]="studio.uid">{{ studio.name }}</option>
       </select>
     </div>
   </div>

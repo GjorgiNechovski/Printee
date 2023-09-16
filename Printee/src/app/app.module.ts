@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterModule } from '@angular/router';
 import { CartModule } from 'src/libs/feature/cart/cart.module';
+import { PrintStudioModule } from 'src/libs/feature/print-studio/print-studio.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { CartModule } from 'src/libs/feature/cart/cart.module';
     NavigationModule,
     ProductsModule,
     CartModule,
+    PrintStudioModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     RouterModule.forRoot([]),
