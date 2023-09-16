@@ -25,7 +25,7 @@ public class ProductController {
 
     @GetMapping("/products")
     public Page<Product> getAllProducts(Pageable pageable) {
-        pageable = PageRequest.of(pageable.getPageNumber(), 15, pageable.getSort());
+        pageable = PageRequest.of(pageable.getPageNumber(), 18, pageable.getSort());
         return productService.findAll(pageable);
     }
 
@@ -36,13 +36,13 @@ public class ProductController {
 
     @GetMapping("/productsByCategory/{categoryId}")
     public Page<Product> getProductsFromCategory(@PathVariable Long categoryId, Pageable pageable) {
-        pageable = PageRequest.of(pageable.getPageNumber(), 15, pageable.getSort());
+        pageable = PageRequest.of(pageable.getPageNumber(), 18, pageable.getSort());
         return productService.getProductsByCategory(categoryId, pageable);
     }
 
     @GetMapping("/productsByPrintStudio/{printStudioId}")
     public Page<Product> getProductsFromPrintStudio(@PathVariable Long printStudioId, Pageable pageable) {
-        pageable = PageRequest.of(pageable.getPageNumber(), 15, pageable.getSort());
+        pageable = PageRequest.of(pageable.getPageNumber(), 18, pageable.getSort());
         return productService.getProductsByPrintStudio(printStudioId, pageable);
     }
 }

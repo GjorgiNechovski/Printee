@@ -40,19 +40,12 @@ public class Product {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name = "active")
-    private boolean active;
-
     @Column(name = "units_in_stock")
     private int unitsInStock;
 
     @Column(name = "date_created")
     @CreationTimestamp
     private Date dateCreated;
-
-    @Column(name = "last_updated")
-    @UpdateTimestamp
-    private Date lastUpdated;
 
     @Column(name = "uid")
     private String uid;
