@@ -1,6 +1,6 @@
 package IT.project.Printee.controllers;
 
-import IT.project.Printee.models.User;
+import IT.project.Printee.models.PrintStudio;
 import IT.project.Printee.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers() {
+    public List<PrintStudio> getAllUsers() {
         return userService.findAll();
     }
 }
