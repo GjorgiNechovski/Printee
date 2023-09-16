@@ -14,7 +14,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
   public currentPage = 1;
   public dataLength = 0;
-  pageSize = 18;
+  pageSize = 6;
 
   constructor(
     private productFacade: ProductFacade,
