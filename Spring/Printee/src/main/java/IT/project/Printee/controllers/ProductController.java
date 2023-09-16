@@ -5,6 +5,9 @@ import IT.project.Printee.models.ProductCategory;
 import IT.project.Printee.services.ProductService;
 import IT.project.Printee.services.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,21 +17,27 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductCategoryService productCategoryService;
 
     @Autowired
-    public ProductController(ProductService productService, ProductCategoryService productCategoryService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
-        this.productCategoryService = productCategoryService;
     }
 
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
-        return productService.findAll();
+    public Page<Product> getAllProducts(Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(), 15, pageable.getSort());
+        return productService.findAll(pageable);
     }
 
-    @GetMapping("/productCategories")
-    public List<ProductCategory> getAllProductCategories() {
-        return productCategoryService.findAll();
+    @GetMapping("/productsByCategory/{categoryId}")
+    public Page<Product> getProductsFromCategory(@PathVariable Long categoryId, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(), 15, pageable.getSort());
+        return productService.getProductsByCategory(categoryId, pageable);
+    }
+
+    @GetMapping("/productsByPrintStudio/{printStudioId}")
+    public Page<Product> getProductsFromPrintStudio(@PathVariable Long printStudioId, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(), 15, pageable.getSort());
+        return productService.getProductsByPrintStudio(printStudioId, pageable);
     }
 }
