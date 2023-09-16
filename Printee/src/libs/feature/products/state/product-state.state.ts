@@ -1,13 +1,13 @@
-import { Product } from '../../../../models/product.models';
+import { PaginatedProducts, Product } from '../../../../models/product.models';
 
 export const PRODUCT__STORE_KEY = 'product-state';
 
 export interface IProductState {
-  products: Product[];
+  products: PaginatedProducts | null;
   selectedProduct: Product | null;
 }
 
 export const initialState: IProductState = {
-  products: [],
+  products: null,
   selectedProduct: null,
 };

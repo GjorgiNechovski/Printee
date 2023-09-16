@@ -33,7 +33,9 @@ export class ProductComponent implements OnInit {
     } else {
       this.productFacade.getProducts().subscribe((products) => {
         const url = window.location.href.split('/')[4];
-        const foundProduct = products.find((product) => product.uid === url);
+        const foundProduct = products.content.find(
+          (product: Product) => product.uid === url
+        );
 
         if (foundProduct) {
           this.product = foundProduct;

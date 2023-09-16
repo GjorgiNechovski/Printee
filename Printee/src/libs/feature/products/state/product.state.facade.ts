@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import * as ProductActions from './product-state.actions';
 import * as ProductSelectors from './product-state.selectors';
 import { Observable, filter } from 'rxjs';
-import { Product } from '../../../../models/product.models';
+import { PaginatedProducts, Product } from '../../../../models/product.models';
 
 @Injectable({
   providedIn: 'root',
@@ -20,10 +20,10 @@ export class ProductFacade {
     this.store.dispatch(ProductActions.putProductInState({ product }));
   }
 
-  public getProducts(): Observable<Product[]> {
+  public getProducts(): Observable<PaginatedProducts> {
     return this.store
       .select(ProductSelectors.productState)
-      .pipe(filter((x) => x.length > 0));
+      .pipe(filter((x): x is PaginatedProducts => !!x));
   }
 
   public getSelectedProduct(): Observable<Product | null> {

@@ -1,3 +1,4 @@
+import { Pageable, Sort } from './pageable.models';
 import { ProductCategory } from './product-category.models';
 import { User } from './user.models';
 
@@ -15,5 +16,21 @@ export class Product {
     public lastUpdated: Date,
     public uid: string,
     public user: User
+  ) {}
+}
+
+export class PaginatedProducts {
+  constructor(
+    public content: Product[],
+    public pageable: Pageable,
+    public last: boolean,
+    public totalPages: number,
+    public totalElements: number,
+    public size: number,
+    public number: number,
+    public sort: Sort,
+    public first: boolean,
+    public numberOfElements: number,
+    public empty: boolean
   ) {}
 }

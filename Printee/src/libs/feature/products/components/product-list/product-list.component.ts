@@ -19,7 +19,9 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
 
   ngOnInit(): void {
-    this.productFacade.getProducts().subscribe((x) => (this.products = x));
+    this.productFacade
+      .getProducts()
+      .subscribe((x) => (this.products = x.content));
   }
 
   putToState(product: Product): void {
