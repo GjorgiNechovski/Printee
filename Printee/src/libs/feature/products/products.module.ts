@@ -10,11 +10,13 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { PageLabelModule } from 'src/ui/page-label/page-label.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [ProductComponent, ProductListComponent],
   imports: [
     CommonModule,
+    NgbModule,
     StoreModule.forFeature(PRODUCT__STORE_KEY, ProductReducer),
     EffectsModule.forFeature([ProductEffects]),
     PageLabelModule,

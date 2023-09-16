@@ -12,6 +12,9 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
+  public currentPage = 1;
+  public dataLength = 0;
+  pageSize = 18;
 
   constructor(
     private productFacade: ProductFacade,
@@ -25,7 +28,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.productFacade
       .getProducts()
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((x) => (this.products = x.content));
+      .subscribe((x) => {
+        this.products = x.content;
+        this.dataLength = x.totalElements;
+      });
   }
 
   putToState(product: Product): void {
@@ -34,6 +40,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   addToCart(product: Product) {
     this.cartService.addToCart(product);
+  }
+
+  getProductsToDisplay(): Product[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+
+    return this.products.slice(startIndex, endIndex);
   }
 
   ngOnDestroy(): void {
