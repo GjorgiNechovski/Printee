@@ -16,8 +16,8 @@ export class ProductFacade {
     this.store.dispatch(ProductActions.fetchProducts());
   }
 
-  public putSelectedProductInState(product: Product): void {
-    this.store.dispatch(ProductActions.putProductInState({ product }));
+  public fetchProductByUid(uid: string): void {
+    this.store.dispatch(ProductActions.fetchProduct({ productUid: uid }));
   }
 
   public getProducts(): Observable<PaginatedProducts> {

@@ -25,4 +25,19 @@ export class ProductEffects {
       )
     );
   });
+
+  fetchProduct = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.fetchProduct),
+      switchMap((action) =>
+        this.service
+          .getProductByUid(action.productUid)
+          .pipe(
+            map((response) =>
+              ProductActions.fetchProductSuccess({ product: response })
+            )
+          )
+      )
+    );
+  });
 }

@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from '../../../../../models/product.models';
 import { ProductFacade } from '../../state/product.state.facade';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CartService } from 'src/libs/feature/cart/services/cart.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject<void>();
   product!: Product;
 
   productForm: FormGroup = new FormGroup({
@@ -24,17 +26,20 @@ export class ProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productFacade.getSelectedProduct().subscribe((x) => this.checkNull(x));
+    this.checkIfProductExists();
   }
 
-  checkNull(x: Product | null): void {
-    if (x) {
-      this.product = x;
-    } else {
-      this.productFacade.getProducts().subscribe((products) => {
-        const url = window.location.href.split('/')[4];
+  checkIfProductExists(): void {
+    const uid = window.location.href.split('/')[4];
+
+    this.productFacade.fetchProductByUid(uid);
+
+    this.productFacade
+      .getProducts()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((products) => {
         const foundProduct = products.content.find(
-          (product: Product) => product.uid === url
+          (product: Product) => product.uid === uid
         );
 
         if (foundProduct) {
@@ -43,15 +48,17 @@ export class ProductComponent implements OnInit {
           this.router.navigate(['/products']);
         }
       });
-    }
   }
 
   addToCart(): void {
-    console.log('called');
-
     this.cartService.addMultipleToCart(
       this.product,
       this.productForm.controls['numberOfProducts'].value
     );
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

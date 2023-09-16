@@ -8,7 +8,12 @@ export const fetchProductsSuccess = createAction(
   props<{ products: PaginatedProducts }>()
 );
 
-export const putProductInState = createAction(
-  '[ProductList] Put Product In State',
+export const fetchProduct = createAction(
+  '[Product] Fetch Product',
+  props<{ productUid: string }>()
+);
+
+export const fetchProductSuccess = createAction(
+  '[Product] Fetch Product Success',
   props<{ product: Product }>()
 );

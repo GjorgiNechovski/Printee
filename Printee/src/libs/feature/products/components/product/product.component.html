@@ -1,9 +1,9 @@
-<app-page-label [text]="product.name">
+<app-page-label *ngIf="product" [text]="product.name">
     <div #component>
     </div>
 </app-page-label>
 
-<div class="bg-body-secondary mx-5 p-5">
+<div *ngIf="product" class="bg-body-secondary mx-5 p-5">
     <div class="container">
         <div class="row">
             <div class="col-md-6">

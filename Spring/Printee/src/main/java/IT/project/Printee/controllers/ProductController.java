@@ -29,6 +29,11 @@ public class ProductController {
         return productService.findAll(pageable);
     }
 
+    @GetMapping("/product/{productUid}")
+    public Product getProductByUid(@PathVariable String productUid){
+        return productService.findByUid(productUid);
+    }
+
     @GetMapping("/productsByCategory/{categoryId}")
     public Page<Product> getProductsFromCategory(@PathVariable Long categoryId, Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber(), 15, pageable.getSort());

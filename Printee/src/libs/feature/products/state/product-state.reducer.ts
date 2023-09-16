@@ -10,7 +10,7 @@ export const ProductReducer = createReducer(
       products: products,
     };
   }),
-  on(ProductActions.putProductInState, (state, { product }) => {
+  on(ProductActions.fetchProductSuccess, (state, { product }) => {
     return {
       ...state,
       selectedProduct: product,
