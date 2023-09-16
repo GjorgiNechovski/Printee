@@ -15,5 +15,11 @@ export const ProductReducer = createReducer(
       ...state,
       selectedProduct: product,
     };
+  }),
+  on(ProductActions.fetchCategoriesSuccess, (state, { categories }) => {
+    return {
+      ...state,
+      categories: categories,
+    };
   })
 );

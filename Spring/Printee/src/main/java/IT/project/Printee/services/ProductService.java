@@ -12,11 +12,19 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin("http://localhost:4200")
 @Service
 public interface ProductService extends JpaRepository<Product, Long> {
-    @Query("SELECT p FROM Product p WHERE p.category.id = :categoryId")
-    Page<Product> getProductsByCategory(@Param("categoryId") Long categoryId, Pageable pageable);
-
-    @Query("SELECT p FROM Product p WHERE p.printStudio.id = :printStudioId")
-    Page<Product> getProductsByPrintStudio(@Param("printStudioId") Long printStudioId, Pageable pageable);
-
     Product findByUid(String uid);
+    @Query("SELECT p FROM Product p WHERE p.category.uid = :categoryUid")
+    Page<Product> getProductsByCategory(@Param("categoryUid") String categoryUid, Pageable pageable);
+
+    @Query("SELECT p FROM Product p WHERE p.printStudio.uid = :printStudioUid")
+    Page<Product> getProductsByPrintStudio(@Param("printStudioUid") String printStudioUid, Pageable pageable);
+
+    @Query("SELECT p FROM Product p WHERE (:categoryUid IS NULL OR p.category.uid = :categoryUid) " +
+            "AND (:printStudioUid IS NULL OR p.printStudio.uid = :printStudioUid)")
+    Page<Product> findProductsByFilters(
+            @Param("categoryUid") String categoryUid,
+            @Param("printStudioUid") String printStudioUid,
+            Pageable pageable
+    );
+
 }

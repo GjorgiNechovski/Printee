@@ -14,9 +14,9 @@ export class ProductEffects {
   fetchProducts$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductActions.fetchProducts),
-      switchMap(() =>
+      switchMap((action) =>
         this.service
-          .getProducts()
+          .getProducts(action.productFilter)
           .pipe(
             map((response) =>
               ProductActions.fetchProductsSuccess({ products: response })
@@ -35,6 +35,21 @@ export class ProductEffects {
           .pipe(
             map((response) =>
               ProductActions.fetchProductSuccess({ product: response })
+            )
+          )
+      )
+    );
+  });
+
+  fetchCategories$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.fetchCategories),
+      switchMap(() =>
+        this.service
+          .getCategories()
+          .pipe(
+            map((response) =>
+              ProductActions.fetchCategoriesSuccess({ categories: response })
             )
           )
       )

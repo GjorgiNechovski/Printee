@@ -8,6 +8,11 @@ export const productState = createSelector(
   (state1: IProductState) => state1.products
 );
 
+export const categories = createSelector(
+  state,
+  (state1: IProductState) => state1.categories
+);
+
 export const selectedProduct = createSelector(
   state,
   (state1: IProductState) => state1.selectedProduct

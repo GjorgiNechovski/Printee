@@ -3,7 +3,15 @@ import { Product } from '../../../../../models/product.models';
 import { ProductFacade } from '../../state/product.state.facade';
 import { Router } from '@angular/router';
 import { CartService } from 'src/libs/feature/cart/services/cart.service';
-import { Subject, takeUntil } from 'rxjs';
+import {
+  Subject,
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil,
+} from 'rxjs';
+import { FormGroup, FormControl } from '@angular/forms';
+import { ProductCategory } from 'src/models/product-category.models';
 
 @Component({
   selector: 'app-product-list',
@@ -16,6 +24,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public dataLength = 0;
   pageSize = 6;
 
+  searchForm: FormGroup = new FormGroup({
+    search: new FormControl<string>(''),
+    categories: new FormControl(),
+    printStudios: new FormControl(),
+  });
+
+  categoriesList = new Array<ProductCategory>();
+
   constructor(
     private productFacade: ProductFacade,
     private router: Router,
@@ -25,12 +41,37 @@ export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
 
   ngOnInit(): void {
-    this.productFacade
-      .getProducts()
+    this.searchForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe((formValue) => {
+        const queryParams: string[] = [];
+
+        if (formValue.categories) {
+          queryParams.push(`categoryUid=${formValue.categories}`);
+        }
+
+        if (formValue.search) {
+          queryParams.push(`printStudioUid=${formValue.numberOfProducts}`);
+        }
+
+        const queryString = queryParams.join('&');
+
+        this.productFacade.fetchProducts(queryString);
+      });
+
+    combineLatest([
+      this.productFacade.getProducts(),
+      this.productFacade.getCategories(),
+    ])
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((x) => {
-        this.products = x.content;
-        this.dataLength = x.totalElements;
+      .subscribe(([productsResponse, categories]) => {
+        this.products = productsResponse.content;
+        this.dataLength = productsResponse.totalElements;
+        this.categoriesList = categories;
       });
   }
 

@@ -5,6 +5,7 @@ import * as ProductActions from './product-state.actions';
 import * as ProductSelectors from './product-state.selectors';
 import { Observable, filter } from 'rxjs';
 import { PaginatedProducts, Product } from '../../../../models/product.models';
+import { ProductCategory } from 'src/models/product-category.models';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +13,24 @@ import { PaginatedProducts, Product } from '../../../../models/product.models';
 export class ProductFacade {
   public constructor(private readonly store: Store<IProductState>) {}
 
-  public fetchProducts(): void {
-    this.store.dispatch(ProductActions.fetchProducts());
+  public fetchProducts(productFilter: string | null = null): void {
+    this.store.dispatch(
+      ProductActions.fetchProducts({ productFilter: productFilter })
+    );
   }
 
   public fetchProductByUid(uid: string): void {
     this.store.dispatch(ProductActions.fetchProduct({ productUid: uid }));
+  }
+
+  public fetchCategories(): void {
+    this.store.dispatch(ProductActions.fetchCategories());
+  }
+
+  public getCategories(): Observable<ProductCategory[]> {
+    return this.store
+      .select(ProductSelectors.categories)
+      .pipe(filter((x): x is ProductCategory[] => !!x));
   }
 
   public getProducts(): Observable<PaginatedProducts> {

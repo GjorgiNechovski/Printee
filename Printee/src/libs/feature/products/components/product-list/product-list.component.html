@@ -1,5 +1,21 @@
 <app-page-label [text]="'Product list'"></app-page-label>
 
+<form [formGroup]="searchForm" class="mb-4" style="margin-top: -2em;">
+  <div class="form-group row">
+    <div class="col-md-8"> 
+      <label for="search">Search by name:</label>
+      <input id="search" type="text" class="form-control" formControlName="search">
+    </div>
+    <div class="col-md-4"> 
+      <label for="categoriesSelect">Select Category:</label>
+      <select id="categoriesSelect" class="form-control" formControlName="categories">
+        <option *ngFor="let category of categoriesList" [value]="category.uid">{{ category.categoryName }}</option>
+      </select>      
+    </div>
+  </div>
+</form>
+
+
 <div class="container">
   <div class="row">
     <div *ngFor="let product of getProductsToDisplay()" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-5">     
@@ -9,7 +25,7 @@
           <img [src]="product.imageUrl" class="img-fluid" alt="Image of {{ product.name }}">
         </div> 
         <span>{{product.unitPrice}}</span>
-        <button (click)="addToCart(product)" class="btn btn-outline-primary btn-sm float-end" type="button">Add To Cart</button>
+        <button (click)="addToCart(product)" class="btn btn-primary btn-sm float-end" type="button">Add To Cart</button>
       </div>
     </div>
   </div>
