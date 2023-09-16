@@ -19,10 +19,10 @@ public class ProductCategory {
     @Column(name = "category_name")
     private String categoryName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Product> products;
 
-    @Column(name = "uid", nullable = false, unique = true, length = 36) // Added uid column
+    @Column(name = "uid", nullable = false, unique = true, length = 36)
     private String uid;
 
 }

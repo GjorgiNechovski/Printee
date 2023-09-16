@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import * as ProductActions from './product-state.actions';
 import * as ProductSelectors from './product-state.selectors';
 import { Observable, filter } from 'rxjs';
-import { Product } from '../models/product.models';
+import { Product } from '../../../../models/product.models';
 
 @Injectable({
   providedIn: 'root',

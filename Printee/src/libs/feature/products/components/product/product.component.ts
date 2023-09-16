@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../../models/product.models';
+import { Product } from '../../../../../models/product.models';
 import { ProductFacade } from '../../state/product.state.facade';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
