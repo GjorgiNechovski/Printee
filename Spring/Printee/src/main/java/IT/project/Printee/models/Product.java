@@ -3,7 +3,6 @@ package IT.project.Printee.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -20,13 +19,18 @@ public class Product {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(name = "fk_category"))
     private ProductCategory category;
 
     @ManyToOne
     @JoinColumn(name = "print_studio_id", nullable = false, foreignKey = @ForeignKey(name = "fk_print_studio"))
     private PrintStudio printStudio;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_user"))
+    private User user;
+
 
     @Column(name = "name")
     private String name;
