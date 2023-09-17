@@ -8,4 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin("http://localhost:4200")
 @Service
 public interface PrintStudioService extends JpaRepository<PrintStudio, Long> {
+    PrintStudio findByEmailAndPassword(String email, String password);
+
 }
