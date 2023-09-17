@@ -50,6 +50,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
         queryParams.push(`printStudioUid=${formValue.printStudios}`);
       }
 
+      if (formValue.search) {
+        queryParams.push(`search=${formValue.search}`);
+      }
+
       const queryString = queryParams.join('&');
 
       this.productFacade.fetchProducts(queryString);
@@ -62,8 +66,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.dataLength = productsResponse.totalElements;
         this.categoriesList = categories;
         this.printStudiosList = printStudios;
-
-        console.log(printStudios);
       });
   }
 
@@ -80,6 +82,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     const endIndex = startIndex + this.pageSize;
 
     return this.products.slice(startIndex, endIndex);
+  }
+
+  clearFilters(): void {
+    this.searchForm.reset();
   }
 
   ngOnDestroy(): void {

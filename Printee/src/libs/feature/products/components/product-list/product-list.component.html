@@ -2,7 +2,7 @@
 
 <form [formGroup]="searchForm" class="mb-4" style="margin-top: -2em">
   <div class="form-group row">
-    <div class="col-md-6">
+    <div class="col-md-5">
       <label for="search">Search by name:</label>
       <input id="search" type="text" class="form-control" formControlName="search" />
     </div>
@@ -17,6 +17,11 @@
       <select id="studioSelect" class="form-control" formControlName="printStudios">
         <option *ngFor="let studio of printStudiosList" [value]="studio.uid">{{ studio.name }}</option>
       </select>
+    </div>
+    <div class="col-md-1">
+      <div class="text-right">
+        <button type="button" class="btn btn-danger" (click)="clearFilters()">Clear Filters</button>
+      </div>
     </div>
   </div>
 </form>
@@ -39,7 +44,6 @@
 <div class="d-flex justify-content-center">
   <ngb-pagination
     [collectionSize]="dataLength"
-    #numPagesExp3
     [(page)]="currentPage"
     [maxSize]="5"
     [rotate]="true"
