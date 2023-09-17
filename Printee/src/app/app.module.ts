@@ -11,6 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { RouterModule } from '@angular/router';
 import { CartModule } from 'src/libs/feature/cart/cart.module';
 import { PrintStudioModule } from 'src/libs/feature/print-studio/print-studio.module';
+import { AuthenticationModule } from 'src/libs/feature/authentication/authentication.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { PrintStudioModule } from 'src/libs/feature/print-studio/print-studio.mo
     ProductsModule,
     CartModule,
     PrintStudioModule,
+    AuthenticationModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     RouterModule.forRoot([]),

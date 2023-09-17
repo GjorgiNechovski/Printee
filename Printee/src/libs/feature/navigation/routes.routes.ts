@@ -3,6 +3,8 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { ProductListComponent } from '../products/components/product-list/product-list.component';
 import { ProductComponent } from '../products/components/product/product.component';
 import { CartComponent } from '../cart/components/cart/cart.component';
+import { AuthenticationComponent } from '../authentication/components/authentication/authentication.component';
+import { AuthGuard } from '../authentication/services/authentication.guard';
 
 export const routes: Routes = [
   {
@@ -13,17 +15,21 @@ export const routes: Routes = [
   {
     path: '',
     component: NavigationComponent,
-    children: [{ path: 'products', component: ProductListComponent }],
+    children: [{ path: 'products', component: ProductListComponent, canActivate: [AuthGuard] }],
+  },
+  {
+    path: 'login',
+    component: AuthenticationComponent,
   },
   {
     path: 'product/:uid',
     component: NavigationComponent,
-    children: [{ path: '', component: ProductComponent }],
+    children: [{ path: '', component: ProductComponent, canActivate: [AuthGuard] }],
   },
   {
     path: 'cart',
     component: NavigationComponent,
-    children: [{ path: '', component: CartComponent }],
+    children: [{ path: '', component: CartComponent, canActivate: [AuthGuard] }],
   },
   {
     path: '**',

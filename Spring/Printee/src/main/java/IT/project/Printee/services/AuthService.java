@@ -44,7 +44,7 @@ public class AuthService {
             );
         }
 
-        return  null;
+        throw new AuthenticationException("Authentication failed");
     }
 }
 

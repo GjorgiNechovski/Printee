@@ -12,3 +12,14 @@ export class User {
     public products: Product[]
   ) {}
 }
+
+export class AuthUser {
+  constructor(
+    public id: number,
+    public role: string,
+    public name: string,
+    public lastName: string,
+    public uid: string,
+    public email: string
+  ) {}
+}
