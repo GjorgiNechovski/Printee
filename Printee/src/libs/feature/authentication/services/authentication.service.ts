@@ -5,13 +5,15 @@ import { Router } from '@angular/router';
 
 import { apiUrl, headers } from 'src/environment/appConfig';
 import { AuthUser } from 'src/models/user.models';
-import { of } from 'rxjs';
+import { Subject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   user: AuthUser | null = null;
+
+  showMessage = new Subject<boolean>();
 
   constructor(
     private httpClient: HttpClient,
@@ -29,10 +31,9 @@ export class AuthenticationService {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           if (error.status === 401) {
-            console.log('try again');
-
             this.router.navigate(['/login']);
           }
+          this.showMessage.next(true);
           return of(null);
         })
       )
