@@ -9,7 +9,7 @@ export class AuthGuard {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
-    const isLogged = this.getCookie('isLogged');
+    const isLogged = this.getCookie('token');
 
     if (isLogged) {
       return true;

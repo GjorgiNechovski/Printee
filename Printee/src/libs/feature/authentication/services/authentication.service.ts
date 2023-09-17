@@ -42,7 +42,7 @@ export class AuthenticationService {
 
           const expirationDate = new Date();
           expirationDate.setTime(expirationDate.getTime() + 2 * 60 * 60 * 1000);
-          document.cookie = `isLogged=true; expires=${expirationDate.toUTCString()}`;
+          document.cookie = `token=GMB-printee; expires=${expirationDate.toUTCString()}`;
 
           this.router.navigate(['/products']);
         }
@@ -50,7 +50,7 @@ export class AuthenticationService {
   }
 
   public logOut(): void {
-    document.cookie = 'isLogged=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     this.user = null;
     this.router.navigate(['/login']);
   }
