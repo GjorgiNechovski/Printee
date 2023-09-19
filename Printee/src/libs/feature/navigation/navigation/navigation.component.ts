@@ -14,7 +14,7 @@ export class NavigationComponent implements OnInit {
   logo = logo;
 
   ngOnInit(): void {
-    this.name = this.auth.user?.name;
+    this.auth.user?.subscribe((x) => (this.name = x?.name));
   }
 
   logOut() {

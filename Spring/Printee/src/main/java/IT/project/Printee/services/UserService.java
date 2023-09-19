@@ -9,4 +9,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Service
 public interface UserService extends JpaRepository<User, Long> {
     User findByEmailAndPassword(String email, String password);
+
+    User findByUid(String uid);
 }

@@ -9,5 +9,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Service
 public interface PrintStudioService extends JpaRepository<PrintStudio, Long> {
     PrintStudio findByEmailAndPassword(String email, String password);
+    PrintStudio findByUid(String uid);
 
 }

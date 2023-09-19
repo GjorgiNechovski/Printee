@@ -20,4 +20,9 @@ public class AuthenticationController {
     public AuthenticatedUser login(@RequestBody LoginRequest loginRequest) {
         return authService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
     }
+
+    @GetMapping("/self")
+    public AuthenticatedUser getLoggedIn(@RequestParam String uid){
+        return this.authService.getLoggedInUser((uid));
+    }
 }

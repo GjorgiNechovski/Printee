@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 
 import { apiUrl, headers } from 'src/environment/appConfig';
 import { AuthUser } from 'src/models/user.models';
-import { Subject, of } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  user: AuthUser | null = null;
+  user: Observable<AuthUser | null> = of(null);
 
   showMessage = new Subject<boolean>();
 
@@ -39,20 +39,39 @@ export class AuthenticationService {
       )
       .subscribe((x) => {
         if (x !== null) {
-          this.user = x;
+          this.user = of(x);
 
           const expirationDate = new Date();
           expirationDate.setTime(expirationDate.getTime() + 2 * 60 * 60 * 1000);
-          document.cookie = `token=GMB-printee; expires=${expirationDate.toUTCString()}`;
+          document.cookie = `token=${x.uid}; expires=${expirationDate.toUTCString()}`;
 
           this.router.navigate(['/products']);
         }
       });
   }
 
+  public getAuthenticatedUser(): void {
+    const uid = this.getCookie('token');
+
+    if (uid !== null) {
+      this.user = this.httpClient.get<AuthUser>(apiUrl + `/self?uid=${uid}`);
+    }
+  }
+
   public logOut(): void {
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    this.user = null;
+    this.user = of(null);
     this.router.navigate(['/login']);
+  }
+
+  private getCookie(name: string): string | null {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.trim().split('=');
+      if (cookieName === name) {
+        return cookieValue;
+      }
+    }
+    return null;
   }
 }

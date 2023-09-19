@@ -19,7 +19,6 @@ public class AuthService {
     }
 
     public AuthenticatedUser authenticate(String email, String password) {
-        System.out.println(email + " " + password);
         User user = userService.findByEmailAndPassword(email, password);
         if (user != null) {
             return new AuthenticatedUser(
@@ -45,6 +44,35 @@ public class AuthService {
         }
 
         throw new AuthenticationException("Authentication failed");
+    }
+
+    public AuthenticatedUser getLoggedInUser(String uid){
+        User user = userService.findByUid(uid);
+        if (user != null) {
+            return new AuthenticatedUser(
+                    user.getId(),
+                    "user",
+                    user.getName(),
+                    user.getLastName(),
+                    user.getUid(),
+                    user.getEmail()
+            );
+        }
+
+        PrintStudio printStudio = printStudioService.findByUid(uid);
+        System.out.println(printStudio);
+        if (printStudio != null) {
+            return new AuthenticatedUser(
+                    printStudio.getId(),
+                    "print_studio",
+                    printStudio.getName(),
+                    null,
+                    printStudio.getUid(),
+                    printStudio.getEmail()
+            );
+        }
+
+        return null;
     }
 }
 
