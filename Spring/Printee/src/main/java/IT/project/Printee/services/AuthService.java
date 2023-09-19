@@ -60,7 +60,6 @@ public class AuthService {
         }
 
         PrintStudio printStudio = printStudioService.findByUid(uid);
-        System.out.println(printStudio);
         if (printStudio != null) {
             return new AuthenticatedUser(
                     printStudio.getId(),

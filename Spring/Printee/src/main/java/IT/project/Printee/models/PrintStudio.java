@@ -30,4 +30,4 @@ public class PrintStudio {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "printStudio")
     private Set<Product> products;
 
-}
+    }

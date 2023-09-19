@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
+import { catchError, filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { apiUrl, headers } from 'src/environment/appConfig';
@@ -54,7 +54,7 @@ export class AuthenticationService {
     const uid = this.getCookie('token');
 
     if (uid !== null) {
-      this.user = this.httpClient.get<AuthUser>(apiUrl + `/self?uid=${uid}`);
+      this.user = this.httpClient.get<AuthUser>(apiUrl + `/self?uid=${uid}`).pipe(filter((x) => x !== null));
     }
   }
 
