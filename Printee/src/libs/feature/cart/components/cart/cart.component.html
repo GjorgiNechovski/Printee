@@ -1,1 +1,81 @@
 <app-page-label [text]="'Cart'"></app-page-label>
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div *ngIf="products.length > 0" class="col-md-12">
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center" scope="col" width="20%">Product Image</th>
+                            <th class="text-center" scope="col" width="50%">Product Detail</th>
+                            <th class="text-center" scope="col" width="30%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let product of products" class="text-center">
+                            <td class="text-center">
+                                <img [src]="product.imageUrl" class="img-fluid" width="150px" [alt]="'image of the product'" />
+                            </td>
+                            
+                            <td class="align-middle ">
+                                <p>{{ product.name }}</p>
+                                <p>{{ product.unitPrice }}</p>
+                                <p>{{product.printStudio.name}}</p>
+                            </td>
+                            <td>
+                                <div class="items">
+                                    <span>Quantity:</span>
+                            
+                                    <div class="row no-gutters align-items-center justify-content-center"> 
+                                        <div class="col">
+                                            <button (click)="decrementQuantity(product)" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                            
+                                        <div class="col text-center"> 
+                                            {{ product.quantity }}
+                                        </div>
+                            
+                                        <div class="col">
+                                            <button (click)="incrementQuantity(product)" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                            
+                                        <div class="col-8"></div>
+                                    </div>
+                                </div>
+                            
+                                <button (click)="remove(product)" class="btn btn-danger btn-sm mt-2">Remove</button>
+                            
+                                <p class="mt-2">Subtotal: {{ product.quantity * product.unitPrice }}</p>
+                            </td>
+                        </tr>
+                        
+
+                        <tr>
+                            <td class="text-center" colspan="2"></td>
+                            <td class="text-center" style="font-weight: bold">
+                                <p class="text-center">Total Quantity: {{ totalQuantity }}</p>
+                                <p class="text-center">Total Price: {{ totalPrice }}</p>
+                                <a class="text-center" routerLink="/checkout" class="btn btn-primary btn-lg">Checkout</a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div *ngIf="products.length === 0" class="alert alert-warning col-md-12" role="alert">
+                Your shopping cart is empty. 
+            </div>
+
+        </div>
+    </div>
+</div>

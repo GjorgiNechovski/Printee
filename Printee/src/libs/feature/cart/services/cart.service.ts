@@ -1,38 +1,46 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../../../../models/product.models';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Product } from 'src/models/product.models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private priceSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  public price: Observable<number> = this.priceSubject.asObservable();
+  private cartItemsSubject: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
+  public cartItems$: Observable<Product[]> = this.cartItemsSubject.asObservable();
 
-  private productsSubject: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
-  public products$: Observable<Product[]> = this.productsSubject.asObservable();
+  private totalPriceSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public totalPrice$: Observable<number> = this.totalPriceSubject.asObservable();
 
-  public addToCart(product: Product): void {
-    this.productsSubject.next([...this.productsSubject.value, product]);
-    this.calculatePrice();
+  getCartItems(): Product[] {
+    return this.cartItemsSubject.value;
   }
 
-  public addMultipleToCart(product: Product, amount: number): void {
-    const updatedProducts = [...this.productsSubject.value];
+  getTotalPrice(): number {
+    return this.totalPriceSubject.value;
+  }
 
-    for (let i = 0; i < amount; i++) {
-      updatedProducts.push(product);
+  addToCart(product: Product, quantity = 1) {
+    const currentCartItems = this.getCartItems();
+    const existingCartItemIndex = currentCartItems.findIndex((item) => item.id === product.id);
+
+    if (existingCartItemIndex !== -1) {
+      currentCartItems[existingCartItemIndex].quantity += quantity;
+    } else {
+      const productWithQuantity = { ...product, quantity };
+      currentCartItems.push(productWithQuantity);
     }
 
-    this.productsSubject.next(updatedProducts);
-    this.calculatePrice();
+    const newTotalPrice = currentCartItems.reduce((total, item) => total + item.unitPrice * item.quantity, 0);
+    this.totalPriceSubject.next(newTotalPrice);
+
+    this.cartItemsSubject.next([...currentCartItems]);
   }
 
-  private calculatePrice(): void {
-    let totalPrice = 0;
-    this.productsSubject.value.forEach((x) => {
-      totalPrice += x.unitPrice;
-    });
-    this.priceSubject.next(totalPrice);
+  updateCartItems(updatedCartItems: Product[]) {
+    const newTotalPrice = updatedCartItems.reduce((total, item) => total + item.unitPrice * item.quantity, 0);
+    this.totalPriceSubject.next(newTotalPrice);
+
+    this.cartItemsSubject.next([...updatedCartItems]);
   }
 }

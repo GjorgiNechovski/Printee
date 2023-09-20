@@ -15,7 +15,7 @@ export class CartIconComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.cartService.price.subscribe((x) => (this.price = x));
+    this.cartService.totalPrice$.subscribe((x) => (this.price = x));
   }
 
   openCart(): void {

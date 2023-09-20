@@ -1,4 +1,5 @@
 import { Pageable, Sort } from './pageable.models';
+import { PrintStudio } from './print-studio.models';
 import { ProductCategory } from './product-category.models';
 import { User } from './user.models';
 
@@ -13,10 +14,11 @@ export class Product {
     public unitsInStock: number,
     public dateCreated: Date,
     public uid: string,
-    public user: User
+    public printStudio: PrintStudio,
+    public user: User,
+    public quantity: number
   ) {}
 }
-
 export class PaginatedProducts {
   constructor(
     public content: Product[],

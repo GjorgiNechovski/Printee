@@ -49,7 +49,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   addToCart(): void {
-    this.cartService.addMultipleToCart(this.product, this.productForm.controls['numberOfProducts'].value);
+    this.cartService.addToCart(this.product, this.productForm.controls['numberOfProducts'].value);
   }
 
   ngOnDestroy(): void {
