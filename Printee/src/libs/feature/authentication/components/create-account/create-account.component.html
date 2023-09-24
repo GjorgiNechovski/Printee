@@ -1,74 +1,55 @@
-<form [formGroup]="createAccountForm" class="container mt-4">
-  <div class="form-group row">
-    <span class="col-form-label col-sm-4">What kind of account would you like to create?</span>
-    <span class="bg-danger " [hidden]="selectOne">Please select one</span>
-    <div class="col-sm-8">
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" id="userType" value="User" formControlName="type">
-        <label class="form-check-label" for="userType">User</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" id="printStudioType" value="PrintStudio" formControlName="type">
-        <label class="form-check-label" for="printStudioType">PrintStudio</label>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <form [formGroup]="createAccountForm" class="container mt-4">
+              <div class="form-group row">
+                <label for="type" class="col-form-label">What kind of account would you like to create?</label>
+                <span class="bg-danger py-1 my-1" [hidden]="selectOne">Please select one</span>
+                <div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="userType" value="User" formControlName="type">
+                    <label class="form-check-label" for="userType">User</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="printStudioType" value="PrintStudio" formControlName="type">
+                    <label class="form-check-label" for="printStudioType">PrintStudio</label>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" formControlName="name">
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name: (not required if making a print studio account)</label>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName">
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" formControlName="email">
+              </div>
+              <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" formControlName="password">
+              </div>
+              <div class="form-group">
+                <label for="repeatPassword">Repeat Password:</label>
+                <input type="password" class="form-control" id="repeatPassword" formControlName="repeatPassword">
+              </div>
+              <div class="form-group">
+                <label for="card">Card: (not required if making a user account, you can enter this any time you like)</label>
+                <input type="text" class="form-control" id="card" formControlName="card">
+              </div>
+          
+              <button (click)="create()" type="submit" class="btn btn-primary mt-4">Create Account</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="name"
-        formControlName="name"
-      />
-    </div>
-    <div class="form-group">
-      <label for="lastName">Last Name: (not required if making a print studio account)</label>
-      <input
-        type="text"
-        class="form-control"
-        id="lastName"
-        formControlName="lastName"
-      />
-    </div>
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        formControlName="email"
-      />
-    </div>
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        class="form-control"
-        id="password"
-        formControlName="password"
-      />
-    </div>
-    <div class="form-group">
-        <label for="password">Repeat Password:</label>
-        <input
-          type="password"
-          class="form-control"
-          id="repeatPassword"
-          formControlName="repeatPassword"
-        />
-      </div>
-    <div class="form-group">
-      <label for="card">Card: (not required if making an user account, you can enter this any time you like)</label>
-      <input
-        type="text"
-        class="form-control"
-        id="card"
-        formControlName="card"
-      />
-    </div>
-  
-    <button (click)="create()" type="submit" class="btn btn-primary mt-4">Create Account</button>
-  </form>
-  
+</section>
