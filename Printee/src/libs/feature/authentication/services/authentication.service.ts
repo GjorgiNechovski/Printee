@@ -59,8 +59,12 @@ export class AuthenticationService {
     }
   }
 
-  public createAccount(account: User | PrintStudio, typeAccount: string): void {
-    this.httpClient.post(apiUrl + '/create', { account: account, type: typeAccount }, { headers: headers });
+  public createUserAccount(account: User): void {
+    this.httpClient.post(apiUrl + '/createUser', account, { headers: headers });
+  }
+
+  public createStudioAccount(account: PrintStudio): void {
+    this.httpClient.post(apiUrl + '/createStudio', account, { headers: headers });
   }
 
   public logOut(): void {

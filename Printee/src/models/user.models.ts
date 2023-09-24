@@ -6,9 +6,9 @@ export class User {
     public lastName: string,
     public email: string,
     public password: string,
-    public uid: string,
-    public role: string,
-    public products: Product[]
+    public uid?: string,
+    public role?: string,
+    public products?: Product[]
   ) {}
 }
 

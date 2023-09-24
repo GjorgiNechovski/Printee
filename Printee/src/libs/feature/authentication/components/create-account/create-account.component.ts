@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import { User } from 'src/models/user.models';
+import { PrintStudio } from 'src/models/print-studio.models';
 
 @Component({
   selector: 'app-create-account',
@@ -23,6 +24,22 @@ export class CreateAccountComponent {
 
   create(): void {
     if (this.createAccountForm.controls['type'].value === 'User') {
+      const user = new User(
+        this.createAccountForm.controls['name'].value,
+        this.createAccountForm.controls['lastName'].value,
+        this.createAccountForm.controls['email'].value,
+        this.createAccountForm.controls['password'].value
+      );
+
+      this.authService.createUserAccount(user);
+    } else {
+      const studio = new PrintStudio(
+        this.createAccountForm.controls['name'].value,
+        this.createAccountForm.controls['email'].value,
+        this.createAccountForm.controls['password'].value
+      );
+
+      this.authService.createStudioAccount(studio);
     }
   }
 }
