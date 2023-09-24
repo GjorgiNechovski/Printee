@@ -32,15 +32,6 @@ CREATE TABLE IF NOT EXISTS  `printee`.`user` (
 ENGINE=InnoDB
 AUTO_INCREMENT = 1;
 
-CREATE TABLE IF NOT EXISTS `printee`.`user_role` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `role_name` VARCHAR(255) NOT NULL,
-  `uid` VARCHAR(36) NOT NULL,
-  UNIQUE KEY `uk_role_name` (`role_name`)
-)
-ENGINE=InnoDB
-AUTO_INCREMENT = 1;
-
 CREATE TABLE IF NOT EXISTS `printee`.`product` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(255) DEFAULT NULL,
@@ -65,6 +56,24 @@ CREATE TABLE IF NOT EXISTS `printee`.`product` (
 ENGINE=InnoDB
 AUTO_INCREMENT = 1;
 
+CREATE TABLE IF NOT EXISTS `printee`.`user_order` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `user_id` BIGINT(20) NOT NULL,
+  `print_studio_id` BIGINT(20) DEFAULT NULL,
+  `product_id` BIGINT(20) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `last_name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `card` VARCHAR(255) NOT NULL,
+  `location` VARCHAR(255) NOT NULL,
+  `order_date` DATETIME(6) DEFAULT NULL,
+  CONSTRAINT `fk_user_order_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `fk_user_order_print_studio` FOREIGN KEY (`print_studio_id`) REFERENCES `print_studio` (`id`),
+  CONSTRAINT `fk_user_order_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) 
+ENGINE=InnoDB 
+AUTO_INCREMENT=1;
+
 -------------------------------------------------------------
 -- 				  Deafult Testing values                   -- 
 -------------------------------------------------------------
@@ -86,16 +95,6 @@ VALUES
     ('User4', 'LastName4', 'user4@example.com', 'password4', UUID()),
     ('User5', 'LastName5', 'user5@example.com', 'password5', UUID());
     
-INSERT INTO `printee`.`user_role` (`role_name`, `uid`)
-VALUES
-    ('user_User1', (SELECT `uid` FROM `printee`.`user` WHERE `name` = 'User1' LIMIT 1)),
-    ('user_User2', (SELECT `uid` FROM `printee`.`user` WHERE `name` = 'User2' LIMIT 1)),
-    ('user_User3', (SELECT `uid` FROM `printee`.`user` WHERE `name` = 'User3' LIMIT 1)),
-    ('user_User4', (SELECT `uid` FROM `printee`.`user` WHERE `name` = 'User4' LIMIT 1)),
-    ('user_User5', (SELECT `uid` FROM `printee`.`user` WHERE `name` = 'User5' LIMIT 1)),
-    ('print_studio_PrintStudioUser1', (SELECT `uid` FROM `printee`.`print_studio` WHERE `name` = 'PrintStudioUser1' LIMIT 1)),
-    ('print_studio_PrintStudioUser2', (SELECT `uid` FROM `printee`.`print_studio` WHERE `name` = 'PrintStudioUser2' LIMIT 1)),
-    ('print_studio_PrintStudioUser3', (SELECT `uid` FROM `printee`.`print_studio` WHERE `name` = 'PrintStudioUser3' LIMIT 1));
 
 INSERT INTO `printee`.`product` (
   `name`, `description`, `unit_price`, `image_url`, `units_in_stock`, 
