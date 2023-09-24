@@ -4,8 +4,9 @@ import { catchError, filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { apiUrl, headers } from 'src/environment/appConfig';
-import { AuthUser } from 'src/models/user.models';
+import { AuthUser, User } from 'src/models/user.models';
 import { Observable, Subject, of } from 'rxjs';
+import { PrintStudio } from 'src/models/print-studio.models';
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +57,10 @@ export class AuthenticationService {
     if (uid !== null) {
       this.user = this.httpClient.get<AuthUser>(apiUrl + `/self?uid=${uid}`).pipe(filter((x) => x !== null));
     }
+  }
+
+  public createAccount(account: User | PrintStudio, typeAccount: string): void {
+    this.httpClient.post(apiUrl + '/create', { account: account, type: typeAccount }, { headers: headers });
   }
 
   public logOut(): void {

@@ -2,7 +2,6 @@ import { Product } from './product.models';
 
 export class User {
   constructor(
-    public id: number,
     public name: string,
     public lastName: string,
     public email: string,
@@ -15,7 +14,6 @@ export class User {
 
 export class AuthUser {
   constructor(
-    public id: number,
     public role: string,
     public name: string,
     public lastName: string,

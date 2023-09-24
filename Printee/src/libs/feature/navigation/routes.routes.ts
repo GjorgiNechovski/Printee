@@ -5,6 +5,7 @@ import { ProductComponent } from '../products/components/product/product.compone
 import { CartComponent } from '../cart/components/cart/cart.component';
 import { AuthenticationComponent } from '../authentication/components/authentication/authentication.component';
 import { AuthGuard } from '../authentication/services/authentication.guard';
+import { CreateAccountComponent } from '../authentication/components/create-account/create-account.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: AuthenticationComponent,
+  },
+  {
+    path: 'createAccount',
+    component: CreateAccountComponent,
   },
   {
     path: 'product/:uid',
