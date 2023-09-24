@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, filter } from 'rxjs/operators';
+import { catchError, filter, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { apiUrl, headers } from 'src/environment/appConfig';
@@ -59,12 +59,12 @@ export class AuthenticationService {
     }
   }
 
-  public createUserAccount(account: User): void {
-    this.httpClient.post(apiUrl + '/createUser', account, { headers: headers });
+  public createUserAccount(account: User): Observable<string> {
+    return this.httpClient.post(apiUrl + '/createUser', account, { headers: headers }).pipe(map((x) => x.toString()));
   }
 
-  public createStudioAccount(account: PrintStudio): void {
-    this.httpClient.post(apiUrl + '/createStudio', account, { headers: headers });
+  public createStudioAccount(account: PrintStudio): Observable<string> {
+    return this.httpClient.post(apiUrl + '/createStudio', account, { headers: headers }).pipe(map((x) => x.toString()));
   }
 
   public logOut(): void {

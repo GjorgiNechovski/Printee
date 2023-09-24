@@ -10,6 +10,7 @@ import { PrintStudio } from 'src/models/print-studio.models';
   styleUrls: ['./create-account.component.css'],
 })
 export class CreateAccountComponent {
+  selectOne = true;
   constructor(private authService: AuthenticationService) {}
 
   createAccountForm = new FormGroup({
@@ -31,15 +32,17 @@ export class CreateAccountComponent {
         this.createAccountForm.controls['password'].value
       );
 
-      this.authService.createUserAccount(user);
-    } else {
+      this.authService.createUserAccount(user).subscribe();
+    } else if (this.createAccountForm.controls['type'].value === 'PrintStudio') {
       const studio = new PrintStudio(
         this.createAccountForm.controls['name'].value,
         this.createAccountForm.controls['email'].value,
         this.createAccountForm.controls['password'].value
       );
 
-      this.authService.createStudioAccount(studio);
+      this.authService.createStudioAccount(studio).subscribe();
+    } else {
+      this.selectOne = false;
     }
   }
 }

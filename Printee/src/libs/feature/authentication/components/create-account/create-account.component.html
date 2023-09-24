@@ -1,17 +1,19 @@
 <form [formGroup]="createAccountForm" class="container mt-4">
-    <div class="form-group row">
-        <span class="col-form-label col-sm-4">What kind of account would you like to create?</span>
-        <div class="col-sm-8">
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="userType" value="User" formControlName="type">
-            <label class="form-check-label" for="userType">User</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="printStudioType" value="PrintStudio" formControlName="type">
-            <label class="form-check-label" for="printStudioType">PrintStudio</label>
-          </div>
-        </div>
+  <div class="form-group row">
+    <span class="col-form-label col-sm-4">What kind of account would you like to create?</span>
+    <span class="bg-danger " [hidden]="selectOne">Please select one</span>
+    <div class="col-sm-8">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="userType" value="User" formControlName="type">
+        <label class="form-check-label" for="userType">User</label>
       </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="printStudioType" value="PrintStudio" formControlName="type">
+        <label class="form-check-label" for="printStudioType">PrintStudio</label>
+      </div>
+    </div>
+  </div>
+  
     <div class="form-group">
       <label for="name">Name:</label>
       <input
