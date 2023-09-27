@@ -1,6 +1,7 @@
 package IT.project.Printee.controllers;
 
 import IT.project.Printee.models.Product;
+import IT.project.Printee.models.nonApiModels.UploadModel;
 import IT.project.Printee.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -72,4 +73,9 @@ public class ProductController {
         pageable = PageRequest.of(pageable.getPageNumber(), 18, pageable.getSort());
         return productService.getProductsByPrintStudio(printStudioUid, pageable);
     }
+
+    @PostMapping("/upload")
+    public void uploadImage(@RequestBody UploadModel model) {
+    }
+
 }

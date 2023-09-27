@@ -6,6 +6,7 @@ import { CartComponent } from '../cart/components/cart/cart.component';
 import { AuthenticationComponent } from '../authentication/components/authentication/authentication.component';
 import { AuthGuard } from '../authentication/services/authentication.guard';
 import { CreateAccountComponent } from '../authentication/components/create-account/create-account.component';
+import { CreateObjectComponent } from '../products/components/create-object/create-object.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,11 @@ export const routes: Routes = [
     path: 'cart',
     component: NavigationComponent,
     children: [{ path: '', component: CartComponent, canActivate: [AuthGuard] }],
+  },
+  {
+    path: 'createObject',
+    component: NavigationComponent,
+    children: [{ path: '', component: CreateObjectComponent, canActivate: [AuthGuard] }],
   },
   {
     path: '**',

@@ -11,9 +11,10 @@ import { PageLabelModule } from 'src/ui/page-label/page-label.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateObjectComponent } from './components/create-object/create-object.component';
 
 @NgModule({
-  declarations: [ProductComponent, ProductListComponent],
+  declarations: [ProductComponent, ProductListComponent, CreateObjectComponent],
   imports: [
     CommonModule,
     NgbModule,
@@ -23,6 +24,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RouterModule,
     ReactiveFormsModule,
   ],
-  exports: [ProductComponent, RouterModule, ProductListComponent],
+  exports: [ProductComponent, RouterModule, ProductListComponent, CreateObjectComponent],
 })
 export class ProductsModule {}

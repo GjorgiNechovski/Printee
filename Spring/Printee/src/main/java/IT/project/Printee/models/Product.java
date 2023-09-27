@@ -31,7 +31,6 @@ public class Product {
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_user"))
     private User user;
 
-
     @Column(name = "name")
     private String name;
 
