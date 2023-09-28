@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiUrl, headers } from 'src/environment/appConfig';
-import { UploadObject } from '../models/upload.models';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +8,8 @@ import { UploadObject } from '../models/upload.models';
 export class UploadProductsService {
   constructor(private httpClient: HttpClient) {}
 
-  uploadObject(object: UploadObject): unknown {
-    return this.httpClient.post(apiUrl + '/upload', object, { headers }).subscribe();
+  uploadObject(name: string, description: string, price: number, image: File, stock: number): void {
+    const object = { name: name, description: description, price: price, image: image, stock: stock };
+    this.httpClient.post(apiUrl + '/uploadObject', object, { headers }).subscribe();
   }
 }

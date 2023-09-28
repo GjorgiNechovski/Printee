@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UploadProductsService } from '../../services/upload-products.service';
-import { UploadObject } from '../../models/upload.models';
 
 @Component({
   selector: 'app-create-product',
@@ -15,15 +14,31 @@ export class CreateObjectComponent {
     name: new FormControl<string>(''),
     description: new FormControl<string>(''),
     unitPrice: new FormControl<number>(0),
-    image: new FormControl<string>(''),
+    image: new FormControl(),
     unitsInStock: new FormControl<number>(0),
   });
 
+  uploadImage(): void {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+
+    fileInput.addEventListener('change', (event) => {
+      const files = (event.target as HTMLInputElement).files;
+      if (files !== null) {
+        this.createObjectForm.controls['image'].setValue(files[0]);
+      }
+    });
+
+    fileInput.click();
+  }
   onSubmit() {
-    const formData = this.createObjectForm.value;
+    const name = this.createObjectForm.controls['name'].value;
+    const description = this.createObjectForm.controls['description'].value;
+    const price = this.createObjectForm.controls['unitPrice'].value.toString();
+    const image = this.createObjectForm.controls['image'].value;
+    const stock = this.createObjectForm.controls['unitsInStock'].value.toString();
 
-    const object = new UploadObject(formData.name, formData.description, formData.unitPrice, formData.image, formData.unitsInStock);
-
-    this.uploadService.uploadObject(object);
+    this.uploadService.uploadObject(name, description, price, image, stock);
   }
 }

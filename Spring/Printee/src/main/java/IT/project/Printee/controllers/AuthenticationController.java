@@ -44,7 +44,7 @@ public class AuthenticationController {
             user.setUid(UUID.randomUUID().toString());
 
             userService.save(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User created");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Account created");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed to create user");
         }
@@ -57,7 +57,7 @@ public class AuthenticationController {
 
             printStudioService.save(studio);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("User created");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Account created");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed to create user");
         }

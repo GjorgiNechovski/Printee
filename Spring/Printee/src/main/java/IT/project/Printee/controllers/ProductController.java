@@ -1,14 +1,16 @@
 package IT.project.Printee.controllers;
 
 import IT.project.Printee.models.Product;
-import IT.project.Printee.models.nonApiModels.UploadModel;
+import IT.project.Printee.models.nonApiModels.UploadObject;
 import IT.project.Printee.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -74,8 +76,11 @@ public class ProductController {
         return productService.getProductsByPrintStudio(printStudioUid, pageable);
     }
 
-    @PostMapping("/upload")
-    public void uploadImage(@RequestBody UploadModel model) {
+    @RequestMapping(method = RequestMethod.POST, name = "/uploadObject",  consumes = "multipart/form-data")
+    public void uploadFile(@RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("unitPrice") double unitPrice,
+                           @RequestParam("image") MultipartFile image, @RequestParam("unitsInStock") int unitsInStock)
+     {
+        System.out.println(image);
     }
 
 }
