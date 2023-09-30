@@ -1,7 +1,11 @@
 package IT.project.Printee.controllers;
 
+import IT.project.Printee.models.PrintStudio;
 import IT.project.Printee.models.Product;
-import IT.project.Printee.models.nonApiModels.UploadObject;
+import IT.project.Printee.models.ProductCategory;
+import IT.project.Printee.services.FileUploadService;
+import IT.project.Printee.services.PrintStudioService;
+import IT.project.Printee.services.ProductCategoryService;
 import IT.project.Printee.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,7 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -20,10 +27,16 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private final ProductService productService;
+    private final FileUploadService fileUploadService;
+    private final ProductCategoryService productCategoryService;
+    private final PrintStudioService printStudioService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, FileUploadService fileUploadService, ProductCategoryService productCategoryService, PrintStudioService printStudioService) {
         this.productService = productService;
+        this.fileUploadService = fileUploadService;
+        this.productCategoryService = productCategoryService;
+        this.printStudioService = printStudioService;
     }
 
     @GetMapping("/products")
@@ -33,8 +46,8 @@ public class ProductController {
             @RequestParam(name = "search", required = false) String search,
             Pageable pageable
     ) {
-        pageable = PageRequest.of(pageable.getPageNumber(), 18, pageable.getSort());
-        Page<Product> productReturn = null;
+        pageable = PageRequest.of(pageable.getPageNumber(), 40, pageable.getSort());
+        Page<Product> productReturn;
 
         if(categoryUid != null && printStudioUid != null){
             productReturn =  productService.findProductsByFilters(categoryUid, printStudioUid, pageable);
@@ -77,15 +90,37 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/uploadObject", consumes = "multipart/form-data")
-    public ResponseEntity<String> uploadFile(@RequestParam("name") String name,
+    public ResponseEntity<Product> uploadFile(@RequestParam("name") String name,
                                              @RequestParam("description") String description,
                                              @RequestParam("price") double price,
                                              @RequestParam("image") MultipartFile image,
-                                             @RequestParam("stock") int stock) {
+                                             @RequestParam("stock") int stock,
+                                             @RequestParam("categoryUid") String categoryUid,
+                                             @RequestParam("studioUid") String studioUid) throws IOException {
 
-        
+        ProductCategory category = productCategoryService.findByUid(categoryUid);
 
-        return ResponseEntity.ok("File uploaded successfully");
+        if (category == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        PrintStudio studio = printStudioService.findByUid(studioUid);
+        String imageUrl = fileUploadService.uploadFile(image);
+
+        Product product = new Product();
+        product.setName(name);
+        product.setDescription(description);
+        product.setUnitPrice(BigDecimal.valueOf(price));
+        product.setImageUrl(imageUrl);
+        product.setUnitsInStock(stock);
+        product.setCategory(category);
+        product.setUid(UUID.randomUUID().toString());
+        product.setUser(null);
+        product.setPrintStudio(studio);
+
+        productService.save(product);
+
+        return ResponseEntity.ok(product);
     }
 
 

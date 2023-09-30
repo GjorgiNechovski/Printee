@@ -26,10 +26,3 @@ public class ProductCategory {
     private String uid;
 
 }
-
-
-
-
-
-
-

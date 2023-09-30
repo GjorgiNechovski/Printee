@@ -36,4 +36,17 @@ export class ProductFacade {
   public getSelectedProduct(): Observable<Product | null> {
     return this.store.select(ProductSelectors.selectedProduct);
   }
+
+  public uploadNewObject(name: string, description: string, price: string, image: File, stock: string, category: string): void {
+    this.store.dispatch(
+      ProductActions.uploadNewObject({
+        name,
+        description,
+        price,
+        image,
+        stock,
+        category,
+      })
+    );
+  }
 }

@@ -21,5 +21,11 @@ export const ProductReducer = createReducer(
       ...state,
       categories: categories,
     };
+  }),
+  on(ProductActions.uploadNewObjectSuccess, (state, { product }) => {
+    return {
+      ...state,
+      products: state.products ? { ...state.products, content: state.products.content.concat(product) } : null,
+    };
   })
 );

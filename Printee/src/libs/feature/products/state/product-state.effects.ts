@@ -3,12 +3,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as ProductActions from './product-state.actions';
 import { map, switchMap } from 'rxjs';
 import { ProductService } from '../services/product.service';
+import { UploadProductsService } from '../services/upload-products.service';
 
 @Injectable()
 export class ProductEffects {
   constructor(
     private actions$: Actions,
-    private service: ProductService
+    private service: ProductService,
+    private uploadService: UploadProductsService
   ) {}
 
   fetchProducts$ = createEffect(() => {
@@ -35,4 +37,15 @@ export class ProductEffects {
       switchMap(() => this.service.getCategories().pipe(map((response) => ProductActions.fetchCategoriesSuccess({ categories: response }))))
     );
   });
+
+  uploadObject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductActions.uploadNewObject),
+      switchMap((action) =>
+        this.uploadService
+          .uploadObject(action.name, action.description, action.price, action.image, action.stock, action.category)
+          .pipe(map((response) => ProductActions.uploadNewObjectSuccess({ product: response })))
+      )
+    )
+  );
 }

@@ -28,7 +28,7 @@ public class Product {
     private PrintStudio printStudio;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_user"))
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user"))
     private User user;
 
     @Column(name = "name")
@@ -53,4 +53,3 @@ public class Product {
     @Column(name = "uid")
     private String uid;
 }
-

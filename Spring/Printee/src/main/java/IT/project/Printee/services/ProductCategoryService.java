@@ -8,4 +8,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin("http://localhost:4200")
 @Service
 public interface ProductCategoryService extends JpaRepository<ProductCategory, Long> {
+    ProductCategory findByUid(String uid);
 }
