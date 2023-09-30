@@ -76,11 +76,18 @@ public class ProductController {
         return productService.getProductsByPrintStudio(printStudioUid, pageable);
     }
 
-    @RequestMapping(method = RequestMethod.POST, name = "/uploadObject",  consumes = "multipart/form-data")
-    public void uploadFile(@RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("unitPrice") double unitPrice,
-                           @RequestParam("image") MultipartFile image, @RequestParam("unitsInStock") int unitsInStock)
-     {
-        System.out.println(image);
+    @RequestMapping(method = RequestMethod.POST, value = "/uploadObject", consumes = "multipart/form-data")
+    public ResponseEntity<String> uploadFile(@RequestParam("name") String name,
+                                             @RequestParam("description") String description,
+                                             @RequestParam("price") double price,
+                                             @RequestParam("image") MultipartFile image,
+                                             @RequestParam("stock") int stock) {
+
+        
+
+        return ResponseEntity.ok("File uploaded successfully");
     }
+
+
 
 }
