@@ -89,6 +89,12 @@ public class ProductController {
         return productService.getProductsByPrintStudio(printStudioUid, pageable);
     }
 
+    @GetMapping("/productsByUser/{userUid}")
+    public Page<Product> getProductsFromUser(@PathVariable String userUid, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(), 18, pageable.getSort());
+        return productService.getProductsByUserUid(userUid, pageable);
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/uploadObject", consumes = "multipart/form-data")
     public ResponseEntity<Product> uploadFile(@RequestParam("name") String name,
                                              @RequestParam("description") String description,

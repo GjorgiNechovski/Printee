@@ -49,4 +49,12 @@ export class ProductFacade {
       })
     );
   }
+
+  public fetchOwnProducts(): void {
+    this.store.dispatch(ProductActions.fetchOwnProducts());
+  }
+
+  public getOwnProducts(): Observable<PaginatedProducts> {
+    return this.store.select(ProductSelectors.ownProducts).pipe(filter((x): x is PaginatedProducts => !!x));
+  }
 }

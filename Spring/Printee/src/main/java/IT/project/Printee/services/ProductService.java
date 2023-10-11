@@ -19,6 +19,9 @@ public interface ProductService extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p WHERE p.printStudio.uid = :printStudioUid")
     Page<Product> getProductsByPrintStudio(@Param("printStudioUid") String printStudioUid, Pageable pageable);
 
+    @Query("SELECT p FROM Product p WHERE p.user.uid = :userUid")
+    Page<Product> getProductsByUserUid(@Param("userUid") String userUid, Pageable pageable);
+
     @Query("SELECT p FROM Product p WHERE (:categoryUid IS NULL OR p.category.uid = :categoryUid) " +
             "AND (:printStudioUid IS NULL OR p.printStudio.uid = :printStudioUid)")
     Page<Product> findProductsByFilters(

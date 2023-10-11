@@ -12,9 +12,10 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateObjectComponent } from './components/create-object/create-object.component';
+import { OwnProductsComponent } from './components/own-products/own-products.component';
 
 @NgModule({
-  declarations: [ProductComponent, ProductListComponent, CreateObjectComponent],
+  declarations: [ProductComponent, ProductListComponent, CreateObjectComponent, OwnProductsComponent],
   imports: [
     CommonModule,
     NgbModule,

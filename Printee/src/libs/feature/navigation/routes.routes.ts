@@ -7,6 +7,7 @@ import { AuthenticationComponent } from '../authentication/components/authentica
 import { AuthGuard } from '../authentication/services/authentication.guard';
 import { CreateAccountComponent } from '../authentication/components/create-account/create-account.component';
 import { CreateObjectComponent } from '../products/components/create-object/create-object.component';
+import { OwnProductsComponent } from '../products/components/own-products/own-products.component';
 
 export const routes: Routes = [
   {
@@ -36,6 +37,11 @@ export const routes: Routes = [
     path: 'cart',
     component: NavigationComponent,
     children: [{ path: '', component: CartComponent, canActivate: [AuthGuard] }],
+  },
+  {
+    path: 'ownProducts',
+    component: NavigationComponent,
+    children: [{ path: '', component: OwnProductsComponent, canActivate: [AuthGuard] }],
   },
   {
     path: 'createObject',
