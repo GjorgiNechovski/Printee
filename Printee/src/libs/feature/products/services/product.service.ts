@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { apiUrl } from '../../../../environment/appConfig';
+import { apiUrl, headers } from '../../../../environment/appConfig';
 import { PaginatedProducts, Product } from '../../../../models/product.models';
 import { Observable, switchMap } from 'rxjs';
 import { ProductCategory } from 'src/models/product-category.models';
@@ -42,5 +42,9 @@ export class ProductService {
         }
       })
     );
+  }
+
+  editProduct(uid: string, changes: Product): Observable<Product> {
+    return this.httpClient.patch<Product>(apiUrl + `/${uid}/edit`, changes, { headers });
   }
 }
