@@ -148,6 +148,10 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
-
+    @DeleteMapping("/{productUid}/delete")
+    public ResponseEntity<Void> editProduct(@PathVariable String productUid){
+        productService.deleteByUid(productUid);
+        return ResponseEntity.ok().build();
+    }
 
 }
