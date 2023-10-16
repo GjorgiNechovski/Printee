@@ -129,6 +129,25 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
+    @PatchMapping("/{productUid}/edit")
+    public ResponseEntity<Void> editProduct(@PathVariable String productUid, @RequestBody Product updatedProduct) {
+        Product existingProduct = productService.findByUid(productUid);
+
+        if (existingProduct == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        existingProduct.setName(updatedProduct.getName());
+        existingProduct.setDescription(updatedProduct.getDescription());
+        existingProduct.setUnitPrice(updatedProduct.getUnitPrice());
+        existingProduct.setUnitsInStock(updatedProduct.getUnitsInStock());
+        existingProduct.setCategory(updatedProduct.getCategory());
+
+        productService.save(existingProduct);
+
+        return ResponseEntity.ok().build();
+    }
+
 
 
 }

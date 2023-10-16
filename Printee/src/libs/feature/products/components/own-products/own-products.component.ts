@@ -31,5 +31,9 @@ export class OwnProductsComponent implements OnInit {
   openEditProductModal(product: Product) {
     const modalRef = this.modalService.open(EditProductComponent, { size: 'lg' });
     modalRef.componentInstance.product = product;
+
+    modalRef.componentInstance.cancelModal.subscribe(() => {
+      modalRef.close();
+    });
   }
 }

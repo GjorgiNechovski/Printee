@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProductCategory } from 'src/models/product-category.models';
 import { Product } from 'src/models/product.models';
@@ -12,6 +12,7 @@ import { ProductService } from '../../services/product.service';
 })
 export class EditProductComponent implements OnInit {
   @Input() product!: Product;
+  @Output() cancelModal = new EventEmitter<void>();
 
   editProductGroup = new FormGroup({
     name: new FormControl(),
@@ -53,6 +54,10 @@ export class EditProductComponent implements OnInit {
       category: this.categoriesList.find((category) => category.uid === changes.category) ?? this.product.category,
     };
 
-    this.productService.editProduct(this.product.uid, this.product).subscribe();
+    this.productService.editProduct(this.product.uid, this.product).subscribe(() => window.location.reload());
+  }
+
+  closeModal(): void {
+    this.cancelModal.emit();
   }
 }
