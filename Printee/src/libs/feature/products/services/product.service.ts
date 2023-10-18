@@ -47,4 +47,8 @@ export class ProductService {
   editProduct(uid: string, changes: Product): Observable<Product> {
     return this.httpClient.patch<Product>(apiUrl + `/${uid}/edit`, changes, { headers });
   }
+
+  deleteProduct(uid: string): Observable<void> {
+    return this.httpClient.delete<void>(apiUrl + `/${uid}/delete`);
+  }
 }

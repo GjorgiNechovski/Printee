@@ -3,6 +3,7 @@ import { ProductFacade } from '../../state/product.state.facade';
 import { Product } from 'src/models/product.models';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditProductComponent } from '../edit-product/edit-product.component';
+import { DeleteProductComponent } from '../delete-product/delete-product.component';
 
 @Component({
   selector: 'app-own-products',
@@ -30,6 +31,15 @@ export class OwnProductsComponent implements OnInit {
 
   openEditProductModal(product: Product) {
     const modalRef = this.modalService.open(EditProductComponent, { size: 'lg' });
+    modalRef.componentInstance.product = product;
+
+    modalRef.componentInstance.cancelModal.subscribe(() => {
+      modalRef.close();
+    });
+  }
+
+  deleteProductModal(product: Product): void {
+    const modalRef = this.modalService.open(DeleteProductComponent, { size: 'lg' });
     modalRef.componentInstance.product = product;
 
     modalRef.componentInstance.cancelModal.subscribe(() => {

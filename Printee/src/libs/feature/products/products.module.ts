@@ -14,9 +14,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateObjectComponent } from './components/create-object/create-object.component';
 import { OwnProductsComponent } from './components/own-products/own-products.component';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { DeleteProductComponent } from './components/delete-product/delete-product.component';
 
 @NgModule({
-  declarations: [ProductComponent, ProductListComponent, CreateObjectComponent, OwnProductsComponent, EditProductComponent],
+  declarations: [
+    ProductComponent,
+    ProductListComponent,
+    CreateObjectComponent,
+    OwnProductsComponent,
+    EditProductComponent,
+    DeleteProductComponent,
+  ],
   imports: [
     CommonModule,
     NgbModule,
