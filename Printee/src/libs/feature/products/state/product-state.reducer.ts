@@ -27,5 +27,11 @@ export const ProductReducer = createReducer(
       ...state,
       products: state.products ? { ...state.products, content: state.products.content.concat(product) } : null,
     };
+  }),
+  on(ProductActions.fetchOwnProductsSuccess, (state, { products }) => {
+    return {
+      ...state,
+      ownProducts: products,
+    };
   })
 );

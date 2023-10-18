@@ -2,7 +2,7 @@
   <div class="col-sm-6">
     <h2 class="mx-3">{{ text }}</h2>
   </div>
-  <div class="col-sm-6 d-flex justify-content-end">
+  <div *ngIf="showCart" class="col-sm-6 d-flex justify-content-end">
     <app-cart class="mx-5"></app-cart>
   </div>
 </div>

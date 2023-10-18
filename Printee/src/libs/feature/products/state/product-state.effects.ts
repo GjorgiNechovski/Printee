@@ -48,4 +48,11 @@ export class ProductEffects {
       )
     )
   );
+
+  fetchOwnProducts = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.fetchOwnProducts),
+      switchMap(() => this.service.getOwnProducts().pipe(map((response) => ProductActions.fetchOwnProductsSuccess({ products: response }))))
+    );
+  });
 }

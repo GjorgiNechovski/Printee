@@ -1,0 +1,38 @@
+<div class="container d-flex justify-content-center align-items-center">
+    <form style="width: 85%;" [formGroup]="editProductGroup">
+      <h1 class="text-center my-4">Editing {{product.name}}</h1>
+  
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" formControlName="description" rows="4"></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price" formControlName="price">
+      </div>
+  
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <input type="number" class="form-control" id="stock" formControlName="stock">
+      </div>
+  
+      <div class="form-group">
+        <label for="category">Select Category:</label>
+        <select id="category" class="form-control" formControlName="category">
+          <option *ngFor="let category of categoriesList" [value]="category.uid">{{ category.categoryName }}</option>
+        </select>
+      </div>
+  
+      <div class="text-center mt-5 mb-2">
+        <button role="button" class="btn btn-success mx-3" (click)="editProduct()">Edit Product</button>
+        <button role="button" class="btn btn-danger mx-3" (click)="closeModal()">Close</button>
+      </div>
+    </form>
+</div>
+  

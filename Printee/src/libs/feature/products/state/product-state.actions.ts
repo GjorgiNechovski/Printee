@@ -23,3 +23,8 @@ export const uploadNewObject = createAction(
   }>()
 );
 export const uploadNewObjectSuccess = createAction('[Product] Upload New Object Success', props<{ product: Product }>());
+
+export const fetchOwnProducts = createAction('[ProductsList] Fetch Own Products');
+export const fetchOwnProductsSuccess = createAction('[ProductsList] Fetch Own Products Success', props<{ products: PaginatedProducts }>());
+
+export const changesToEditedProduct = createAction('[Product] Changes To Product', props<{ product: Product }>());

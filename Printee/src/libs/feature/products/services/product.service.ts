@@ -1,15 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { apiUrl } from '../../../../environment/appConfig';
+import { apiUrl, headers } from '../../../../environment/appConfig';
 import { PaginatedProducts, Product } from '../../../../models/product.models';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { ProductCategory } from 'src/models/product-category.models';
+import { AuthenticationService } from '../../authentication/services/authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthenticationService
+  ) {}
 
   getProducts(productFilter: string | null): Observable<PaginatedProducts> {
     if (productFilter) {
@@ -25,5 +29,22 @@ export class ProductService {
 
   getCategories(): Observable<ProductCategory[]> {
     return this.httpClient.get<ProductCategory[]>(apiUrl + '/productCategories');
+  }
+
+  getOwnProducts(): Observable<PaginatedProducts> {
+    return this.authService.user.pipe(
+      switchMap((user) => {
+        if (user?.role === 'user') {
+          return this.httpClient.get<PaginatedProducts>(apiUrl + '/productsByUser/' + user?.uid);
+        }
+        {
+          return this.httpClient.get<PaginatedProducts>(apiUrl + '/productsByPrintStudio/' + user?.uid);
+        }
+      })
+    );
+  }
+
+  editProduct(uid: string, changes: Product): Observable<Product> {
+    return this.httpClient.patch<Product>(apiUrl + `/${uid}/edit`, changes, { headers });
   }
 }

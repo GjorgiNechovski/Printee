@@ -89,6 +89,12 @@ public class ProductController {
         return productService.getProductsByPrintStudio(printStudioUid, pageable);
     }
 
+    @GetMapping("/productsByUser/{userUid}")
+    public Page<Product> getProductsFromUser(@PathVariable String userUid, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(), 18, pageable.getSort());
+        return productService.getProductsByUserUid(userUid, pageable);
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/uploadObject", consumes = "multipart/form-data")
     public ResponseEntity<Product> uploadFile(@RequestParam("name") String name,
                                              @RequestParam("description") String description,
@@ -121,6 +127,25 @@ public class ProductController {
         productService.save(product);
 
         return ResponseEntity.ok(product);
+    }
+
+    @PatchMapping("/{productUid}/edit")
+    public ResponseEntity<Void> editProduct(@PathVariable String productUid, @RequestBody Product updatedProduct) {
+        Product existingProduct = productService.findByUid(productUid);
+
+        if (existingProduct == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        existingProduct.setName(updatedProduct.getName());
+        existingProduct.setDescription(updatedProduct.getDescription());
+        existingProduct.setUnitPrice(updatedProduct.getUnitPrice());
+        existingProduct.setUnitsInStock(updatedProduct.getUnitsInStock());
+        existingProduct.setCategory(updatedProduct.getCategory());
+
+        productService.save(existingProduct);
+
+        return ResponseEntity.ok().build();
     }
 
 
