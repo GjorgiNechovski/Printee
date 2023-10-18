@@ -1,14 +1,32 @@
 package IT.project.Printee.services;
 
 import IT.project.Printee.models.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import IT.project.Printee.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin("http://localhost:4200")
+import java.util.List;
+
 @Service
-public interface UserService extends JpaRepository<User, Long> {
-    User findByEmailAndPassword(String email, String password);
+public class UserService {
+    UserRepository userRepository;
 
-    User findByUid(String uid);
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public User findUserByUid(String uid){
+        return this.userRepository.findByUid(uid);
+    }
+
+    public List<User> getAllRegularUsers(){
+        return this.userRepository.findByUserType("REGULAR");
+    }
+
+    public List<User> getAllPrintStudioUsers(){
+        return userRepository.findByUserType("PRINT_STUDIO");
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package IT.project.Printee.controllers;
 
 import IT.project.Printee.models.ProductCategory;
+import IT.project.Printee.repositories.ProductCategoryRepository;
 import IT.project.Printee.services.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,6 @@ public class ProductCategoryController {
 
     @GetMapping("/productCategories")
     public List<ProductCategory> getAllProductCategories() {
-        return productCategoryService.findAll();
+        return productCategoryService.getAllCategories();
     }
 }

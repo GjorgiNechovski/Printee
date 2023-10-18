@@ -25,7 +25,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "print_studio_id", nullable = false, foreignKey = @ForeignKey(name = "fk_print_studio"))
-    private PrintStudio printStudio;
+    private User printStudio;
 
     @ManyToOne
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user"))

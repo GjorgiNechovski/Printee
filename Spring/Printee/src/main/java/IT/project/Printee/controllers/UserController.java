@@ -20,7 +20,12 @@ public class UserController {
     }
 
     @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userService.getAllRegularUsers();
+    }
+
+    @GetMapping("/printStudios")
     public List<User> getAllPrintStudios() {
-        return userService.findAll();
+        return this.userService.getAllPrintStudioUsers();
     }
 }

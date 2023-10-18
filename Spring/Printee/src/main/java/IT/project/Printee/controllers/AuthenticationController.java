@@ -1,12 +1,10 @@
 package IT.project.Printee.controllers;
 
-import IT.project.Printee.models.PrintStudio;
 import IT.project.Printee.models.User;
 import IT.project.Printee.models.authentication.AuthenticatedUser;
 import IT.project.Printee.models.authentication.LoginRequest;
 import IT.project.Printee.services.AuthService;
-import IT.project.Printee.services.PrintStudioService;
-import IT.project.Printee.services.UserService;
+import IT.project.Printee.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +16,12 @@ import java.util.UUID;
 @RequestMapping("/api")
 public class AuthenticationController {
     private final AuthService authService;
-    private final UserService userService;
-    private final PrintStudioService printStudioService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public AuthenticationController(AuthService authService, UserService userService, PrintStudioService printStudioService) {
+    public AuthenticationController(AuthService authService, UserRepository userRepository) {
         this.authService = authService;
-        this.userService = userService;
-        this.printStudioService = printStudioService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/login")
@@ -34,32 +30,34 @@ public class AuthenticationController {
     }
 
     @GetMapping("/self")
-    public AuthenticatedUser getLoggedIn(@RequestParam String uid){
-        return this.authService.getLoggedInUser((uid));
+    public AuthenticatedUser getLoggedIn(@RequestParam String uid) {
+        return authService.getLoggedInUser(uid);
     }
 
     @PostMapping("/createUser")
     public ResponseEntity<String> createUser(@RequestBody User user) {
         try {
             user.setUid(UUID.randomUUID().toString());
+            user.setUserType("REGULAR"); // Set the user type to REGULAR
 
-            userService.save(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Account created");
+            userRepository.save(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User account created");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed to create user");
         }
     }
 
     @PostMapping("/createStudio")
-    public ResponseEntity<String> createPrintStudio(@RequestBody PrintStudio studio){
+    public ResponseEntity<String> createPrintStudio(@RequestBody User studio) {
         try {
             studio.setUid(UUID.randomUUID().toString());
+            studio.setUserType("PRINT_STUDIO");
 
-            printStudioService.save(studio);
-
-            return ResponseEntity.status(HttpStatus.CREATED).body("Account created");
+            userRepository.save(studio);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Print Studio account created");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed to create user");
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Failed to create print studio");
         }
     }
 }
+

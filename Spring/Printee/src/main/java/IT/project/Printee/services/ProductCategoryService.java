@@ -1,12 +1,26 @@
 package IT.project.Printee.services;
 
 import IT.project.Printee.models.ProductCategory;
-import org.springframework.data.jpa.repository.JpaRepository;
+import IT.project.Printee.repositories.ProductCategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin("http://localhost:4200")
+import java.util.List;
+
 @Service
-public interface ProductCategoryService extends JpaRepository<ProductCategory, Long> {
-    ProductCategory findByUid(String uid);
+public class ProductCategoryService {
+    private final ProductCategoryRepository productCategoryRepository;
+
+    @Autowired
+    public ProductCategoryService(ProductCategoryRepository productCategoryRepository) {
+        this.productCategoryRepository = productCategoryRepository;
+    }
+
+    public List<ProductCategory> getAllCategories(){
+        return this.productCategoryRepository.findAll();
+    }
+
+    public ProductCategory findByUid(String uid){
+        return this.productCategoryRepository.findByUid(uid);
+    }
 }
