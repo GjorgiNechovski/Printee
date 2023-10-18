@@ -30,7 +30,9 @@ public class User {
     @Column(name = "uid", unique = true, nullable = false)
     private String uid;
 
+    @Column(name = "user_type")
+    private String userType;
+
     @OneToMany(mappedBy = "user")
     private Set<Product> products;
-
 }

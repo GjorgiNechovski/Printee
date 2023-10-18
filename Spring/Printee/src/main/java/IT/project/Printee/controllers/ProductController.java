@@ -1,12 +1,12 @@
 package IT.project.Printee.controllers;
 
-import IT.project.Printee.models.PrintStudio;
 import IT.project.Printee.models.Product;
 import IT.project.Printee.models.ProductCategory;
+import IT.project.Printee.models.User;
 import IT.project.Printee.services.FileUploadService;
-import IT.project.Printee.services.PrintStudioService;
-import IT.project.Printee.services.ProductCategoryService;
-import IT.project.Printee.services.ProductService;
+import IT.project.Printee.repositories.ProductCategoryRepository;
+import IT.project.Printee.repositories.ProductRepository;
+import IT.project.Printee.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,17 +26,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class ProductController {
 
-    private final ProductService productService;
+    private final ProductRepository productRepository;
     private final FileUploadService fileUploadService;
-    private final ProductCategoryService productCategoryService;
-    private final PrintStudioService printStudioService;
-
+    private final ProductCategoryRepository productCategoryRepository;
+    private final UserRepository userRepository;
     @Autowired
-    public ProductController(ProductService productService, FileUploadService fileUploadService, ProductCategoryService productCategoryService, PrintStudioService printStudioService) {
-        this.productService = productService;
+    public ProductController(ProductRepository productRepository, FileUploadService fileUploadService, ProductCategoryRepository productCategoryRepository, UserRepository userRepository) {
+        this.productRepository = productRepository;
         this.fileUploadService = fileUploadService;
-        this.productCategoryService = productCategoryService;
-        this.printStudioService = printStudioService;
+        this.productCategoryRepository = productCategoryRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/products")
@@ -50,14 +49,14 @@ public class ProductController {
         Page<Product> productReturn;
 
         if(categoryUid != null && printStudioUid != null){
-            productReturn =  productService.findProductsByFilters(categoryUid, printStudioUid, pageable);
+            productReturn =  productRepository.findProductsByFilters(categoryUid, printStudioUid, pageable);
         }
         else if (categoryUid != null) {
-            productReturn = productService.getProductsByCategory(categoryUid, pageable);
+            productReturn = productRepository.getProductsByCategory(categoryUid, pageable);
         } else if (printStudioUid != null) {
-            productReturn = productService.getProductsByPrintStudio(printStudioUid, pageable);
+            productReturn = productRepository.getProductsByPrintStudio(printStudioUid, pageable);
         } else {
-            productReturn =  productService.findAll(pageable);
+            productReturn =  productRepository.findAll(pageable);
         }
 
         if (search != null && !search.isEmpty()) {
@@ -74,25 +73,25 @@ public class ProductController {
 
     @GetMapping("/product/{productUid}")
     public Product getProductByUid(@PathVariable String productUid){
-        return productService.findByUid(productUid);
+        return productRepository.findByUid(productUid);
     }
 
     @GetMapping("/productsByCategory/{categoryUid}")
     public Page<Product> getProductsFromCategory(@PathVariable String categoryUid, Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber(), 18, pageable.getSort());
-        return productService.getProductsByCategory(categoryUid, pageable);
+        return productRepository.getProductsByCategory(categoryUid, pageable);
     }
 
     @GetMapping("/productsByPrintStudio/{printStudioUid}")
     public Page<Product> getProductsFromPrintStudio(@PathVariable String printStudioUid, Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber(), 18, pageable.getSort());
-        return productService.getProductsByPrintStudio(printStudioUid, pageable);
+        return productRepository.getProductsByPrintStudio(printStudioUid, pageable);
     }
 
     @GetMapping("/productsByUser/{userUid}")
     public Page<Product> getProductsFromUser(@PathVariable String userUid, Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber(), 18, pageable.getSort());
-        return productService.getProductsByUserUid(userUid, pageable);
+        return productRepository.getProductsByUserUid(userUid, pageable);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/uploadObject", consumes = "multipart/form-data")
@@ -104,13 +103,13 @@ public class ProductController {
                                              @RequestParam("categoryUid") String categoryUid,
                                              @RequestParam("studioUid") String studioUid) throws IOException {
 
-        ProductCategory category = productCategoryService.findByUid(categoryUid);
+        ProductCategory category = productCategoryRepository.findByUid(categoryUid);
 
         if (category == null) {
             return ResponseEntity.badRequest().body(null);
         }
 
-        PrintStudio studio = printStudioService.findByUid(studioUid);
+        User studio = userRepository.findByUid(studioUid);
         String imageUrl = fileUploadService.uploadFile(image);
 
         Product product = new Product();
@@ -124,14 +123,14 @@ public class ProductController {
         product.setUser(null);
         product.setPrintStudio(studio);
 
-        productService.save(product);
+        productRepository.save(product);
 
         return ResponseEntity.ok(product);
     }
 
     @PatchMapping("/{productUid}/edit")
     public ResponseEntity<Void> editProduct(@PathVariable String productUid, @RequestBody Product updatedProduct) {
-        Product existingProduct = productService.findByUid(productUid);
+        Product existingProduct = productRepository.findByUid(productUid);
 
         if (existingProduct == null) {
             return ResponseEntity.notFound().build();
@@ -143,14 +142,14 @@ public class ProductController {
         existingProduct.setUnitsInStock(updatedProduct.getUnitsInStock());
         existingProduct.setCategory(updatedProduct.getCategory());
 
-        productService.save(existingProduct);
+        productRepository.save(existingProduct);
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{productUid}/delete")
     public ResponseEntity<Void> editProduct(@PathVariable String productUid){
-        productService.deleteByUid(productUid);
+        productRepository.deleteByUid(productUid);
         return ResponseEntity.ok().build();
     }
 

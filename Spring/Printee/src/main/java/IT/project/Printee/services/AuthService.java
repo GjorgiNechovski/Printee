@@ -2,44 +2,29 @@ package IT.project.Printee.services;
 
 import IT.project.Printee.config.exceptions.models.AuthenticationException;
 import IT.project.Printee.models.authentication.AuthenticatedUser;
-import IT.project.Printee.models.PrintStudio;
 import IT.project.Printee.models.User;
+import IT.project.Printee.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
-    private final UserService userService;
-    private final PrintStudioService printStudioService;
-
+    private final UserRepository userRepository;
     @Autowired
-    public AuthService(UserService userService, PrintStudioService printStudioService) {
-        this.userService = userService;
-        this.printStudioService = printStudioService;
+    public AuthService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public AuthenticatedUser authenticate(String email, String password) {
-        User user = userService.findByEmailAndPassword(email, password);
+        User user = userRepository.findByEmailAndPassword(email, password);
         if (user != null) {
             return new AuthenticatedUser(
                     user.getId(),
-                    "user",
+                    user.getUserType(),
                     user.getName(),
                     user.getLastName(),
                     user.getUid(),
                     user.getEmail()
-            );
-        }
-
-        PrintStudio printStudio = printStudioService.findByEmailAndPassword(email, password);
-        if (printStudio != null) {
-            return new AuthenticatedUser(
-                    printStudio.getId(),
-                    "print_studio",
-                    printStudio.getName(),
-                    null,
-                    printStudio.getUid(),
-                    printStudio.getEmail()
             );
         }
 
@@ -47,27 +32,15 @@ public class AuthService {
     }
 
     public AuthenticatedUser getLoggedInUser(String uid){
-        User user = userService.findByUid(uid);
+        User user = userRepository.findByUid(uid);
         if (user != null) {
             return new AuthenticatedUser(
                     user.getId(),
-                    "user",
+                    user.getUserType(),
                     user.getName(),
                     user.getLastName(),
                     user.getUid(),
                     user.getEmail()
-            );
-        }
-
-        PrintStudio printStudio = printStudioService.findByUid(uid);
-        if (printStudio != null) {
-            return new AuthenticatedUser(
-                    printStudio.getId(),
-                    "print_studio",
-                    printStudio.getName(),
-                    null,
-                    printStudio.getUid(),
-                    printStudio.getEmail()
             );
         }
 

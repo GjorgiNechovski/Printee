@@ -1,4 +1,4 @@
-package IT.project.Printee.services;
+package IT.project.Printee.repositories;
 
 import IT.project.Printee.models.Product;
 import org.springframework.data.domain.Page;
@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin("http://localhost:4200")
-@Service
-public interface ProductService extends JpaRepository<Product, Long> {
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findByUid(String uid);
     @Query("SELECT p FROM Product p WHERE p.category.uid = :categoryUid")
     Page<Product> getProductsByCategory(@Param("categoryUid") String categoryUid, Pageable pageable);
