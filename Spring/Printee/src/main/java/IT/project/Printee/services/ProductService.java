@@ -4,7 +4,6 @@ import IT.project.Printee.models.Product;
 import IT.project.Printee.models.ProductCategory;
 import IT.project.Printee.models.User;
 import IT.project.Printee.repositories.ProductRepository;
-import IT.project.Printee.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,13 +22,13 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
     private final FileUploadService fileUploadService;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, FileUploadService fileUploadService, UserRepository userRepository) {
+    public ProductService(ProductRepository productRepository, FileUploadService fileUploadService, UserService userService) {
         this.productRepository = productRepository;
         this.fileUploadService = fileUploadService;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     public Page<Product> getProducts(String categoryUid, String printStudioUid, String search, Pageable pageable){
@@ -85,7 +84,7 @@ public class ProductService {
                                 String studioUid,
                                 MultipartFile image,
                                 ProductCategory category) throws IOException {
-        User studio = userRepository.findByUid(studioUid);
+        User studio = userService.findUserByUid(studioUid);
         String imageUrl = fileUploadService.uploadFile(image);
 
         Product product = new Product();

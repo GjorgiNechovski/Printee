@@ -5,6 +5,8 @@ import IT.project.Printee.repositories.ProductCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductCategoryService {
     private final ProductCategoryRepository productCategoryRepository;
@@ -12,6 +14,10 @@ public class ProductCategoryService {
     @Autowired
     public ProductCategoryService(ProductCategoryRepository productCategoryRepository) {
         this.productCategoryRepository = productCategoryRepository;
+    }
+
+    public List<ProductCategory> getAllCategories(){
+        return this.productCategoryRepository.findAll();
     }
 
     public ProductCategory findByUid(String uid){

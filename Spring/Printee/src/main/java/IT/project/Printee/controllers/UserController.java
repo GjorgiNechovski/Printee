@@ -1,7 +1,7 @@
 package IT.project.Printee.controllers;
 
 import IT.project.Printee.models.User;
-import IT.project.Printee.repositories.UserRepository;
+import IT.project.Printee.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,20 +12,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class UserController {
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return userRepository.findByUserType("REGULAR");
+        return userService.getAllRegularUsers();
     }
 
     @GetMapping("/printStudios")
     public List<User> getAllPrintStudios() {
-        return userRepository.findByUserType("PRINT_STUDIO");
+        return this.userService.getAllPrintStudioUsers();
     }
 }
