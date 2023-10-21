@@ -88,6 +88,19 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping(method = RequestMethod.PATCH, value = "/{productUid}/changeImage", consumes = "multipart/form-data")
+    public ResponseEntity<Void> editProductImage(@PathVariable String productUid, @RequestBody MultipartFile image) throws IOException {
+        Product product = productService.getProduct(productUid);
+
+        if (product == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        this.productService.changeProductImage(product, image);
+
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/{productUid}/delete")
     public ResponseEntity<Void> deleteProduct(@PathVariable String productUid){
         productService.deleteProduct(productUid);

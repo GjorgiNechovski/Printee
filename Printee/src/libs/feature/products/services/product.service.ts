@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiUrl, headers } from '../../../../environment/appConfig';
 import { PaginatedProducts, Product } from '../../../../models/product.models';
@@ -50,5 +50,16 @@ export class ProductService {
 
   deleteProduct(uid: string): Observable<void> {
     return this.httpClient.delete<void>(apiUrl + `/${uid}/delete`);
+  }
+
+  changeProductImage(productUid: string, image: File): Observable<void> {
+    const form = new FormData();
+
+    form.append('image', image);
+
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+
+    return this.httpClient.patch<void>(apiUrl + `/${productUid}/changeImage`, form, { headers });
   }
 }

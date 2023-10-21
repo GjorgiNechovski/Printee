@@ -116,5 +116,14 @@ public class ProductService {
     public void deleteProduct(String productUid){
         productRepository.deleteByUid(productUid);
     }
+
+    public void changeProductImage(Product product, MultipartFile image) throws IOException {
+        String imageUrl = fileUploadService.uploadFile(image);
+
+        System.out.println(imageUrl);
+
+        product.setImageUrl(imageUrl);
+        productRepository.save(product);
+    }
 }
 
