@@ -15,6 +15,7 @@ import { CreateObjectComponent } from './components/create-object/create-object.
 import { OwnProductsComponent } from './components/own-products/own-products.component';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { DeleteProductComponent } from './components/delete-product/delete-product.component';
+import { ChangeProductImageComponent } from './components/change-product-image/change-product-image.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { DeleteProductComponent } from './components/delete-product/delete-produ
     OwnProductsComponent,
     EditProductComponent,
     DeleteProductComponent,
+    ChangeProductImageComponent,
   ],
   imports: [
     CommonModule,
